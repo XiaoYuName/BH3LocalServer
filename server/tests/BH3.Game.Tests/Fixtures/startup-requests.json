@@ -1,0 +1,898 @@
+[
+  {
+    "request": 64,
+    "requestType": "GetFriendListReq",
+    "response": 65,
+    "responseType": "GetFriendListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 70,
+    "requestType": "GetAskAddFriendListReq",
+    "response": 71,
+    "responseType": "GetAskAddFriendListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 76,
+    "requestType": "GetRecommendFriendListReq",
+    "response": 77,
+    "responseType": "GetRecommendFriendListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 100,
+    "requestType": "GetAssistantFrozenListReq",
+    "response": 101,
+    "responseType": "GetAssistantFrozenListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 117,
+    "requestType": "UpdateMissionProgressReq",
+    "response": 118,
+    "responseType": "UpdateMissionProgressRsp",
+    "retcode": "Fail"
+  },
+  {
+    "request": 125,
+    "requestType": "GetWeekDayActivityDataReq",
+    "response": 126,
+    "responseType": "GetWeekDayActivityDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 129,
+    "requestType": "FinishGuideReportReq",
+    "response": 130,
+    "responseType": "FinishGuideReportRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 364,
+    "requestType": "GetGobackReq",
+    "response": 365,
+    "responseType": "GetGobackRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 398,
+    "requestType": "ReportClientDataVersionReq",
+    "response": 399,
+    "responseType": "ReportClientDataVersionRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 449,
+    "requestType": "GetMedalDataReq",
+    "response": 450,
+    "responseType": "GetMedalDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 464,
+    "requestType": "GetPediaReq",
+    "response": 465,
+    "responseType": "GetPediaRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 480,
+    "requestType": "GetPlayerCardReq",
+    "response": 481,
+    "responseType": "GetPlayerCardRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 506,
+    "requestType": "GetGrandKeyReq",
+    "response": 507,
+    "responseType": "GetGrandKeyRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 508,
+    "requestType": "GetExBossScheduleReq",
+    "response": 509,
+    "responseType": "GetExBossScheduleRsp",
+    "retcode": "FeatureClosed"
+  },
+  {
+    "request": 510,
+    "requestType": "GetExBossInfoReq",
+    "response": 511,
+    "responseType": "GetExBossInfoRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 568,
+    "requestType": "GetMasterPupilDataReq",
+    "response": 569,
+    "responseType": "GetMasterPupilDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 585,
+    "requestType": "GetTrialAvatarReq",
+    "response": 586,
+    "responseType": "GetTrialAvatarRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 587,
+    "requestType": "GetMasterPupilCardReq",
+    "response": 588,
+    "responseType": "GetMasterPupilCardRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 601,
+    "requestType": "GetDormDataReq",
+    "response": 602,
+    "responseType": "GetDormDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 643,
+    "requestType": "GetAvatarRollDataReq",
+    "response": 644,
+    "responseType": "GetAvatarRollDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 653,
+    "requestType": "GetMasterPupilApplyReq",
+    "response": 654,
+    "responseType": "GetMasterPupilApplyRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 657,
+    "requestType": "GetMasterPupilMainDataReq",
+    "response": 658,
+    "responseType": "GetMasterPupilMainDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 965,
+    "requestType": "GetStageChapterReq",
+    "response": 966,
+    "responseType": "GetStageChapterRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 974,
+    "requestType": "GetFriendRemarkListReq",
+    "response": 975,
+    "responseType": "GetFriendRemarkListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1012,
+    "requestType": "GetWorldMapDataReq",
+    "response": 1013,
+    "responseType": "GetWorldMapDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1191,
+    "requestType": "GetPhotoDataReq",
+    "response": 1192,
+    "responseType": "GetPhotoDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1193,
+    "requestType": "GetWikiDataReq",
+    "response": 1194,
+    "responseType": "GetWikiDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1197,
+    "requestType": "GetPhonePendantDataReq",
+    "response": 1198,
+    "responseType": "GetPhonePendantDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1245,
+    "requestType": "GetEmojiDataReq",
+    "response": 1246,
+    "responseType": "GetEmojiDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1380,
+    "requestType": "GetRegionUidRangeReq",
+    "response": 1381,
+    "responseType": "GetRegionUidRangeRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1382,
+    "requestType": "GetPlotListReq",
+    "response": 1383,
+    "responseType": "GetPlotListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1480,
+    "requestType": "GetCurrencyExchangeInfoReq",
+    "response": 1481,
+    "responseType": "GetCurrencyExchangeInfoRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1519,
+    "requestType": "GetRecommendMissionPanelListReq",
+    "response": 1520,
+    "responseType": "GetRecommendMissionPanelListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1594,
+    "requestType": "GetBlackListReq",
+    "response": 1595,
+    "responseType": "GetBlackListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1601,
+    "requestType": "GetWebActivityInfoReq",
+    "response": 1602,
+    "responseType": "GetWebActivityInfoRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1607,
+    "requestType": "LoginWishGetMainDataReq",
+    "response": 1608,
+    "responseType": "LoginWishGetMainDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1636,
+    "requestType": "GetEliteChapterCompensationInfoReq",
+    "response": 1637,
+    "responseType": "GetEliteChapterCompensationInfoRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1646,
+    "requestType": "GetPrivilegeInfoReq",
+    "response": 1647,
+    "responseType": "GetPrivilegeInfoRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1660,
+    "requestType": "ChapterGroupGetDataReq",
+    "response": 1661,
+    "responseType": "ChapterGroupGetDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1672,
+    "requestType": "GetChapterCompensationInfoReq",
+    "response": 1673,
+    "responseType": "GetChapterCompensationInfoRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1676,
+    "requestType": "GetChallengeStepCompensationInfoReq",
+    "response": 1677,
+    "responseType": "GetChallengeStepCompensationInfoRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1690,
+    "requestType": "GetInviteActivityInviterDataReq",
+    "response": 1691,
+    "responseType": "GetInviteActivityInviterDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1694,
+    "requestType": "GetInviteActivityInviteeDataReq",
+    "response": 1695,
+    "responseType": "GetInviteActivityInviteeDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 1717,
+    "requestType": "GetCollectionListReq",
+    "response": 1718,
+    "responseType": "GetCollectionListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 2204,
+    "requestType": "GetChatgroupListReq",
+    "response": 2205,
+    "responseType": "GetChatgroupListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 2231,
+    "requestType": "EnterWorldChatroomReq",
+    "response": 2232,
+    "responseType": "EnterWorldChatroomRsp",
+    "retcode": "FeatureClosed"
+  },
+  {
+    "request": 2300,
+    "requestType": "GetRpgTaleReq",
+    "response": 2301,
+    "responseType": "GetRpgTaleRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 2427,
+    "requestType": "ChatworldGetActivityScheduleReq",
+    "response": 2428,
+    "responseType": "ChatworldGetActivityScheduleRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 2451,
+    "requestType": "ChatworldGetPrayInfoReq",
+    "response": 2452,
+    "responseType": "ChatworldGetPrayInfoRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 2465,
+    "requestType": "ChatworldBeastGetActivityReq",
+    "response": 2466,
+    "responseType": "ChatworldBeastGetActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 2601,
+    "requestType": "GetArmadaDataReq",
+    "response": 2602,
+    "responseType": "GetArmadaDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 2639,
+    "requestType": "GetConsignedOrderDataReq",
+    "response": 2640,
+    "responseType": "GetConsignedOrderDataRsp",
+    "retcode": "NotInArmada"
+  },
+  {
+    "request": 2821,
+    "requestType": "GetArmadaStageScoreActivityReq",
+    "response": 2822,
+    "responseType": "GetArmadaStageScoreActivityRsp",
+    "retcode": "NotInArmada"
+  },
+  {
+    "request": 2825,
+    "requestType": "GetArmadaActivityListReq",
+    "response": 2826,
+    "responseType": "GetArmadaActivityListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 3000,
+    "requestType": "GetAvatarMissionActivityReq",
+    "response": 3001,
+    "responseType": "GetAvatarMissionActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 3150,
+    "requestType": "GetRoomDataReq",
+    "response": 3151,
+    "responseType": "GetRoomDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 3432,
+    "requestType": "GetEndlessStatusReq",
+    "response": 3433,
+    "responseType": "GetEndlessStatusRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 3550,
+    "requestType": "GetDLCReq",
+    "response": 3551,
+    "responseType": "GetDLCRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 3559,
+    "requestType": "GetDLCAvatarReq",
+    "response": 3560,
+    "responseType": "GetDLCAvatarRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 3574,
+    "requestType": "GetDLCTowerReq",
+    "response": 3575,
+    "responseType": "GetDLCTowerRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 3650,
+    "requestType": "GetEquipmentForgeDataReq",
+    "response": 3651,
+    "responseType": "GetEquipmentForgeDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 3659,
+    "requestType": "GetExtractReforgeActivityReq",
+    "response": 3660,
+    "responseType": "GetExtractReforgeActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 3767,
+    "requestType": "GetBattlePassMissionPanelReq",
+    "response": 3768,
+    "responseType": "GetBattlePassMissionPanelRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 3800,
+    "requestType": "GetClientMailDataReq",
+    "response": 3801,
+    "responseType": "GetClientMailDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 3898,
+    "requestType": "GetRaffleActivityReq",
+    "response": 3899,
+    "responseType": "GetRaffleActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 3900,
+    "requestType": "GetAdventureGroupReq",
+    "response": 3901,
+    "responseType": "GetAdventureGroupRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 3914,
+    "requestType": "GetAdventureStorySweepInfoReq",
+    "response": 3915,
+    "responseType": "GetAdventureStorySweepInfoRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4003,
+    "requestType": "GeneralActivityGetScheduleReq",
+    "response": 4004,
+    "responseType": "GeneralActivityGetScheduleRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4005,
+    "requestType": "GeneralActivityGetMainInfoReq",
+    "response": 4006,
+    "responseType": "GeneralActivityGetMainInfoRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4185,
+    "requestType": "GetTowerRaidActivityReq",
+    "response": 4186,
+    "responseType": "GetTowerRaidActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 4200,
+    "requestType": "GetChapterActivityDataReq",
+    "response": 4201,
+    "responseType": "GetChapterActivityDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4205,
+    "requestType": "GetMissionThemeDataReq",
+    "response": 4206,
+    "responseType": "GetMissionThemeDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4211,
+    "requestType": "GetOfflineResourceDataReq",
+    "response": 4212,
+    "responseType": "GetOfflineResourceDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4229,
+    "requestType": "GetWeeklyRoutineActivityReq",
+    "response": 4230,
+    "responseType": "GetWeeklyRoutineActivityRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4233,
+    "requestType": "GetRankScheduleDataReq",
+    "response": 4234,
+    "responseType": "GetRankScheduleDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4241,
+    "requestType": "GetSurveyDataReq",
+    "response": 4242,
+    "responseType": "GetSurveyDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4248,
+    "requestType": "GetNewbieActivityReq",
+    "response": 4249,
+    "responseType": "GetNewbieActivityRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4262,
+    "requestType": "GetTradingCardActivityReq",
+    "response": 4263,
+    "responseType": "GetTradingCardActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 4295,
+    "requestType": "GetGardenScheduleReq",
+    "response": 4296,
+    "responseType": "GetGardenScheduleRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 4297,
+    "requestType": "GetDropLimitActivityReq",
+    "response": 4298,
+    "responseType": "GetDropLimitActivityRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4305,
+    "requestType": "SanctuaryGetMainInfoReq",
+    "response": 4306,
+    "responseType": "SanctuaryGetMainInfoRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 4312,
+    "requestType": "GetActivityRewardStatisticDataReq",
+    "response": 4313,
+    "responseType": "GetActivityRewardStatisticDataRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 4332,
+    "requestType": "GetSupportActivityReq",
+    "response": 4333,
+    "responseType": "GetSupportActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 4340,
+    "requestType": "GetMosaicActivityReq",
+    "response": 4341,
+    "responseType": "GetMosaicActivityRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4346,
+    "requestType": "GetMissionGroupMainInfoReq",
+    "response": 4347,
+    "responseType": "GetMissionGroupMainInfoRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4380,
+    "requestType": "ReunionCookGetActivityReq",
+    "response": 4381,
+    "responseType": "ReunionCookGetActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 4400,
+    "requestType": "GetNinjaActivityReq",
+    "response": 4401,
+    "responseType": "GetNinjaActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 4496,
+    "requestType": "GetNewOpenworldReq",
+    "response": 4497,
+    "responseType": "GetNewOpenworldRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4508,
+    "requestType": "OpenworldGetMechaTeamReq",
+    "response": 4509,
+    "responseType": "OpenworldGetMechaTeamRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4514,
+    "requestType": "GetOpenworldMechaDefenseReq",
+    "response": 4515,
+    "responseType": "GetOpenworldMechaDefenseRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4546,
+    "requestType": "GetOpenworldQuestActivityReq",
+    "response": 4547,
+    "responseType": "GetOpenworldQuestActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 4600,
+    "requestType": "OpenworldHuntActivityGetDataReq",
+    "response": 4601,
+    "responseType": "OpenworldHuntActivityGetDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 4702,
+    "requestType": "GetGachaDisplayReq",
+    "response": 4703,
+    "responseType": "GetGachaDisplayRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 5008,
+    "requestType": "ClientReportReq",
+    "response": 5009,
+    "responseType": "ClientReportRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 5010,
+    "requestType": "GetAuthkeyReq",
+    "response": 5011,
+    "responseType": "GetAuthkeyRsp",
+    "retcode": "Fail"
+  },
+  {
+    "request": 5021,
+    "requestType": "GetSecurityPasswordReq",
+    "response": 5022,
+    "responseType": "GetSecurityPasswordRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 5202,
+    "requestType": "UltraEndlessGetMainDataReq",
+    "response": 5203,
+    "responseType": "UltraEndlessGetMainDataRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 5452,
+    "requestType": "GetWarshipTrialDataReq",
+    "response": 5453,
+    "responseType": "GetWarshipTrialDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 5790,
+    "requestType": "GetThemeWantedReq",
+    "response": 5791,
+    "responseType": "GetThemeWantedRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 5794,
+    "requestType": "ThemeWantedRefreshTicketReq",
+    "response": 5795,
+    "responseType": "ThemeWantedRefreshTicketRsp",
+    "retcode": "Fail"
+  },
+  {
+    "request": 5890,
+    "requestType": "GetRewardLineActivityReq",
+    "response": 5891,
+    "responseType": "GetRewardLineActivityRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 5941,
+    "requestType": "BuffAssistGetActivityReq",
+    "response": 5942,
+    "responseType": "BuffAssistGetActivityRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 6150,
+    "requestType": "GetGodWarReq",
+    "response": 6151,
+    "responseType": "GetGodWarRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 6700,
+    "requestType": "GetShopListReq",
+    "response": 6701,
+    "responseType": "GetShopListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 6702,
+    "requestType": "GetShoppingMallListReq",
+    "response": 6703,
+    "responseType": "GetShoppingMallListRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 6710,
+    "requestType": "GetRecommendGoodsReq",
+    "response": 6711,
+    "responseType": "GetRecommendGoodsRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 6717,
+    "requestType": "GetVipRewardDataReq",
+    "response": 6718,
+    "responseType": "GetVipRewardDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 6721,
+    "requestType": "GetCardProductInfoReq",
+    "response": 6722,
+    "responseType": "GetCardProductInfoRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 7650,
+    "requestType": "ChapterBwWorldGetDataReq",
+    "response": 7651,
+    "responseType": "ChapterBwWorldGetDataRsp",
+    "retcode": "FeatureClosed"
+  },
+  {
+    "request": 7706,
+    "requestType": "PjmsGetMainDataReq",
+    "response": 7707,
+    "responseType": "PjmsGetMainDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 7708,
+    "requestType": "PjmsGetStoryDataReq",
+    "response": 7709,
+    "responseType": "PjmsGetStoryDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 7784,
+    "requestType": "PjmsGetResidentStageDataReq",
+    "response": 7785,
+    "responseType": "PjmsGetResidentStageDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 7790,
+    "requestType": "PjmsGetAchievementDataReq",
+    "response": 7791,
+    "responseType": "PjmsGetAchievementDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 7812,
+    "requestType": "PjmsGetChapterDataReq",
+    "response": 7813,
+    "responseType": "PjmsGetChapterDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 7814,
+    "requestType": "PjmsGetActivityPanelReq",
+    "response": 7815,
+    "responseType": "PjmsGetActivityPanelRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 7822,
+    "requestType": "PjmsGetConditionDataReq",
+    "response": 7823,
+    "responseType": "PjmsGetConditionDataRsp",
+    "retcode": "Succ"
+  },
+  {
+    "request": 7950,
+    "requestType": "ChapterArkGetDataReq",
+    "response": 7951,
+    "responseType": "ChapterArkGetDataRsp",
+    "retcode": "FeatureClosed"
+  },
+  {
+    "request": 7971,
+    "requestType": "ArkPlusActivityGetDataReq",
+    "response": 7972,
+    "responseType": "ArkPlusActivityGetDataRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 8100,
+    "requestType": "RaidReplaceGetDataReq",
+    "response": 8101,
+    "responseType": "RaidReplaceGetDataRsp",
+    "retcode": "FeatureClosed"
+  },
+  {
+    "request": 8350,
+    "requestType": "ChapterKnightRichManGetDataReq",
+    "response": 8351,
+    "responseType": "ChapterKnightRichManGetDataRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 8411,
+    "requestType": "PjmsChapterKnightDurandalCubeGetDataReq",
+    "response": 8412,
+    "responseType": "PjmsChapterKnightDurandalCubeGetDataRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 8421,
+    "requestType": "PjmsChapterKnightSpaceAdventureGetMainDataReq",
+    "response": 8422,
+    "responseType": "PjmsChapterKnightSpaceAdventureGetMainDataRsp",
+    "retcode": "NotOpen"
+  },
+  {
+    "request": 8250,
+    "requestType": "SimplifiedGodWarGetActivityReq",
+    "response": 8251,
+    "responseType": "SimplifiedGodWarGetActivityRsp"
+  },
+  {
+    "request": 1713,
+    "requestType": "GetWorldMapRecommendReq",
+    "response": 1714,
+    "responseType": "GetWorldMapRecommendRsp"
+  },
+  {
+    "request": 3419,
+    "requestType": "GetOpenworldEndlessDataReq",
+    "response": 3420,
+    "responseType": "GetOpenworldEndlessDataRsp"
+  },
+  {
+    "request": 4500,
+    "requestType": "GetOpenworldStoryReq",
+    "response": 4501,
+    "responseType": "GetOpenworldStoryRsp"
+  },
+  {
+    "request": 2647,
+    "requestType": "GetWareHouseDataReq",
+    "response": 2648,
+    "responseType": "GetWareHouseDataRsp"
+  },
+  {
+    "request": 2456,
+    "requestType": "ChatworldGetDishInfoReq",
+    "response": 2457,
+    "responseType": "ChatworldGetDishInfoRsp"
+  },
+  {
+    "request": 7842,
+    "requestType": "PjmsGetOverallReq",
+    "response": 7843,
+    "responseType": "PjmsGetOverallRsp"
+  }
+]

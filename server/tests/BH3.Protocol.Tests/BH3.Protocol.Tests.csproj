@@ -1,0 +1,1 @@
+<Project Sdk="Microsoft.NET.Sdk"><PropertyGroup><OutputType>Exe</OutputType><IsPackable>false</IsPackable></PropertyGroup><ItemGroup><PackageReference Include="xunit.v3" Version="4.0.0" /><ProjectReference Include="../../src/BH3.Protocol/BH3.Protocol.csproj" /><Using Include="Xunit" /><Compile Include="../TestDirectory.cs" Link="TestDirectory.cs" /></ItemGroup></Project>

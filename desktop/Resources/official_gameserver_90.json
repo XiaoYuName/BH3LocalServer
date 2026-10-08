@@ -1,0 +1,101 @@
+{
+  "account_url": "https://gameapi.account.mihoyo.com",
+  "account_url_backup": "https://gameapi.account.mihoyo.com",
+  "asset_bundle_url_list": [
+    "https://autopatchcn.bh3.com/asset_bundle/pc01/1.0",
+    "https://bundle.bh3.com/asset_bundle/pc01/1.0"
+  ],
+  "ex_audio_and_video_url_list": [],
+  "ex_resource_url_list": [
+    "autopatchcn.bh3.com/tmp/Original",
+    "bundle.bh3.com/tmp/Original"
+  ],
+  "ext": {
+    "1058891250": "1",
+    "1095990871": "1",
+    "1245473982": "1",
+    "1324767488": "前往米游社",
+    "1344653749": "0",
+    "1360176971": "1",
+    "1501014376": "1",
+    "1744250417": "1",
+    "1745366296": "2",
+    "1747909614": "https://m.bbs.mihoyo.com/bh3ToBBS.html",
+    "1794460900": "Recommend",
+    "1839631329": "1",
+    "1887219073": "1",
+    "203732861": "1",
+    "2110930505": "1",
+    "308332524": "1",
+    "763305743": "1"
+  },
+  "force_update_url": "https://autopatchcn.bh3.com/ptpublic/rel/20260818153635_ZkcNIgLXf6Aulyzc/Bh3_release_1.18.0.380_update_pc.exe",
+  "is_data_ready": false,
+  "manifest": {
+    "Asb": {
+      "android": {
+        "enable_time": 0.0,
+        "revision": "9.1.0.6",
+        "suffix": "b21ce031ea86b4034a5ca0c08c98c0df"
+      },
+      "iphone": {
+        "enable_time": 0.0,
+        "revision": "9.1.0.6",
+        "suffix": "bf3b58dad4ffe8a2d9fb272b1bdae40d"
+      },
+      "pc": {
+        "enable_time": 0.0,
+        "revision": "9.1.0.6",
+        "suffix": "0386ddc84bc1b087e05408ee165ff465"
+      }
+    },
+    "AsbPreDownload": {
+      "android": {
+        "enable_time": 1790049600.0,
+        "encrypt_key": "2AEBA603C7E171DD0AF3B0A82416E220",
+        "revision": "9.1.0.0",
+        "suffix": "c4a341a99e6f920667825014956f6ed0"
+      },
+      "iphone": {
+        "enable_time": 1790049600.0,
+        "encrypt_key": "2AEBA603C7E171DD0AF3B0A82416E220",
+        "revision": "9.1.0.0",
+        "suffix": "5fe4034f1a6475a11fadca9435c4bc0d"
+      }
+    },
+    "Audio": {
+      "platform": {
+        "Android": "manifest_2931c39d2fdf72434f470591febd891e.m",
+        "Windows": "manifest_8fad2f15e43eb6c338eae796c6faa525.m",
+        "iOS": "manifest_8987c514707a338994931e377eb6f9e4.m"
+      },
+      "revision": 790033
+    },
+    "AudioPreDownload": {
+      "enable_time": 1790049600,
+      "platform": {
+        "Android": "manifest_98f237d3a0e8a331974553a5289390ce.m",
+        "Windows": "manifest_e9e36160dc97a33a2a33be87e661c65f.m",
+        "iOS": "manifest_5507fb0424baf3f04471a7527c9a746b.m"
+      },
+      "revision": 788995
+    },
+    "VideoEncrypt": {
+      "filename": "product_video_encrypt_70be8054e074f5cc0cf4fbe7659a0f5c"
+    }
+  },
+  "msg": "客户端已更新，请使用启动器下载最新客户端。若无法完成正常更新，请前往米游社联系客服。",
+  "oaserver_url": "https://inner-oa-pc01.bh3.com",
+  "region_name": "pc01",
+  "retcode": 4,
+  "server_cur_time": 1791458203,
+  "server_cur_timezone": 8,
+  "server_ext": {
+    "account_web_url": "https://user.mihoyo.com#",
+    "cdkey_url": "https://public-operation-common.mihoyo.com/common/",
+    "dual_stack_check_web_url": "https://webstatic-pre.mihoyo.com/",
+    "is_official": "1",
+    "mihoyo_sdk_env": "0",
+    "use_account_web_url": "1"
+  }
+}

@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/BH3.Protocol/BH3.Protocol.csproj" />
+    <Project Path="src/BH3.Game/BH3.Game.csproj" />
+    <Project Path="src/BH3.Persistence/BH3.Persistence.csproj" />
+    <Project Path="src/BH3.Server/BH3.Server.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/BH3.Protocol.Tests/BH3.Protocol.Tests.csproj" />
+    <Project Path="tests/BH3.Game.Tests/BH3.Game.Tests.csproj" />
+    <Project Path="tests/BH3.Persistence.Tests/BH3.Persistence.Tests.csproj" />
+    <Project Path="tests/BH3.Server.Tests/BH3.Server.Tests.csproj" />
+  </Folder>
+</Solution>

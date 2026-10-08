@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup><CompressionEnabled>false</CompressionEnabled></PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../BH3.Game/BH3.Game.csproj" />
+    <ProjectReference Include="../BH3.Persistence/BH3.Persistence.csproj" />
+    <ProjectReference Include="../BH3.Protocol/BH3.Protocol.csproj" />
+    <Content Include="../../config/server.json" Link="config/server.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

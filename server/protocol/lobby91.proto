@@ -1,0 +1,26 @@
+syntax = "proto2";
+package proto;
+option csharp_namespace = "BH3.Protocol.Messages";
+
+// Recovered from this workspace's 9.1 UserAssembly.dll and global-metadata.dat.
+// Provenance and serializer RVAs: docs/PJMS_OVERALL_20261009.md.
+// Keep separate from lobby.desc, which is exported from the older reference DLL.
+message PjmsOverall {
+  optional uint32 overall_id = 1;
+  optional uint32 overall_value = 2;
+}
+
+message PjmsGetOverallReq {
+  repeated uint32 overall_id_list = 1;
+  optional bool is_all = 2 [default = false];
+}
+
+message PjmsGetOverallRsp {
+  enum Retcode {
+    SUCC = 0;
+    FAIL = 1;
+  }
+  required Retcode retcode = 1;
+  repeated PjmsOverall overall_list = 2;
+  optional bool is_all = 3 [default = false];
+}

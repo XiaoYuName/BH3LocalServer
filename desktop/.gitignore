@@ -1,0 +1,5 @@
+**/bin/
+**/obj/
+dist/
+**/Data/
+verification/transaction-work/

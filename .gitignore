@@ -1,0 +1,38 @@
+# Generated builds and local verification evidence.
+**/bin/
+**/obj/
+**/dist/
+**/verification/
+**/evidence/
+**/__pycache__/
+*.pyc
+**/logs/
+
+# Local trust material, launcher settings, and player saves.
+/certs/
+*.key
+*.protected
+*.pfx
+*.p12
+*.db
+*.db-shm
+*.db-wal
+/desktop/Data/
+/server/data/
+
+# One-off root analysis outputs; production tools live under server/tools.
+/tools_*.py
+/blob_*.json
+/blob_*.txt
+/derive_key.json
+/kcp_exports.json
+/kcp_native.py
+/key_offset.json
+/keyscan.py
+/magic_scan.json
+/py_*.txt
+/scan_*.txt
+/scan_*.json
+/utf16_keys.json
+/wrapper_scan.json
+/xor_scan.json

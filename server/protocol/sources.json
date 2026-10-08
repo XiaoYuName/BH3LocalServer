@@ -1,0 +1,28 @@
+[
+  {
+    "path": "D:\\SteamGames\\miHoYo Launcher\\games\\LocalServer\\千乐铃音_7.0\\KianaBH\\KianaProto.dll",
+    "sha256": "2c902791f3a6ed67810a1d38ebd4788cf4a46a47cdc45781bf11e92dd6412af4"
+  },
+  {
+    "path": "D:\\SteamGames\\miHoYo Launcher\\games\\LocalServer\\千乐铃音_7.0\\KianaBH\\Resources\\ExcelOutput\\AvatarData.json",
+    "sha256": "db175ded422caf80e5ab5e73d3628bdad9ae9419906885a8d1f91f417bc246e4"
+  },
+  {
+    "path": "D:\\SteamGames\\miHoYo Launcher\\games\\LocalServer\\千乐铃音_7.0\\KianaBH\\Resources\\ExcelOutput\\TutorialData.json",
+    "sha256": "87e62dace51da9837ffe6d46f212ee94663790c9ed595d2ea4970a23cd5ed948"
+  },
+  {
+    "path": "D:\\SteamGames\\miHoYo Launcher\\games\\Honkai Impact 3rd Game\\BH3_Data\\Plugins\\kcp.dll",
+    "sha256": "a926781a485ff68ff3e865b4cafc0b585439ce9956a6a5b0d124f6c628127f5c"
+  },
+  {
+    "path": "D:\\SteamGames\\miHoYo Launcher\\games\\Honkai Impact 3rd Game\\BH3_Data\\Native\\UserAssembly.dll",
+    "sha256": "ec71370c38b3c6f304e909b35f8a6c0ece31356454bd28d554ba37f8537e9d09",
+    "scope": "Static source of lobby91.proto; see PJMS_OVERALL_20261009.md"
+  },
+  {
+    "path": "D:\\SteamGames\\miHoYo Launcher\\games\\Honkai Impact 3rd Game\\BH3_Data\\Managed\\Metadata\\global-metadata.dat",
+    "sha256": "7241908ee3433b0da1a41cb0ae1757e719fad1671caf3d1ae08f66e9e118b4ab",
+    "scope": "Static source of lobby91.proto; see PJMS_OVERALL_20261009.md"
+  }
+]

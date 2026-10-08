@@ -1,0 +1,11 @@
+{
+  "clientVersion": "9.1.0",
+  "bindAddress": "127.0.0.1",
+  "gamePort": 21000,
+  "healthPort": 21080,
+  "maxSessions": 256,
+  "sessionIdleSeconds": 30,
+  "databasePath": "../data/bh3.db",
+  "logDirectory": "../logs",
+  "transportMode": "kcp"
+}

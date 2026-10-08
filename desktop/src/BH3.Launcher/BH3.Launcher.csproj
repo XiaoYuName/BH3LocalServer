@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>..\..\Resources\launcher.ico</ApplicationIcon>
+    <AssemblyName>BH3.Launcher</AssemblyName>
+    <RootNamespace>BH3.Launcher</RootNamespace>
+    <Version>1.2.4</Version>
+    <Product>崩坏 3 · 本地登录器</Product>
+    <Description>原生 Windows 桌面登录器</Description>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <SatelliteResourceLanguages>zh-Hans;en</SatelliteResourceLanguages>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="../../../server/src/BH3.Protocol/LocalTicket.cs" Link="LocalTicket.cs" />
+    <EmbeddedResource Include="..\..\Resources\*" Link="Resources\%(Filename)%(Extension)" />
+  </ItemGroup>
+</Project>
