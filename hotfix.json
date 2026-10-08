@@ -1,0 +1,31 @@
+{
+  "Asb": {
+    "android": { "enable_time": 0.0, "revision": "9.1.0.0", "suffix": "acfeee2cf229268001ac440370cc4bda" },
+    "iphone": { "enable_time": 0.0, "revision": "9.1.0.0", "suffix": "430290cf0d9883147d6585cca5fcc516" },
+    "pc": { "enable_time": 0.0, "revision": "9.1.0.0", "suffix": "4a0e03e8f6573ea7ee40a1ea10cc7bfd" }
+  },
+  "AsbPreDownload": {
+    "android": { "encrypt_key": "6C01623A6055B05FDAE5441C01F5860F", "enable_time": 0.0, "revision": "9.1.0.0", "suffix": "1f6f1d69f6075107cef8ddbc1c9c904b" },
+    "iphone": { "encrypt_key": "6C01623A6055B05FDAE5441C01F5860F", "enable_time": 0.0, "revision": "9.1.0.0", "suffix": "a59abd63d4eeb479b3eae5413ca7d7e2" }
+  },
+  "Audio": {
+    "platform": {
+      "Android": "manifest_44c12dc8a58d83df735a49ef8fc4540f.m",
+      "Windows": "manifest_49f559dd867015274316b640cf80be39.m",
+      "iOS": "manifest_b013e0b580fe989043c1a51faeba2064.m"
+    },
+    "revision": 786505
+  },
+  "AudioPreDownload": {
+    "enable_time": 0.0,
+    "platform": {
+      "Android": "manifest_5cc392b946b14986d7ec4c0b26d1f914.m",
+      "Windows": "manifest_3073f1f394cb8e780ffd27e2f064c008.m",
+      "iOS": "manifest_c44a626b4137a3c6fdc970090e7ea629.m"
+    },
+    "revision": 784980
+  },
+  "VideoEncrypt": {
+    "filename": "product_video_encrypt_57d8f638265f5e6f2a6464444f42470b"
+  }
+}

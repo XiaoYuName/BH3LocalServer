@@ -1,0 +1,13 @@
+{
+  "ui_host": "127.0.0.1",
+  "ui_port": 17890,
+  "proxy_host": "127.0.0.1",
+  "proxy_port": 8080,
+  "local_http_host": "127.0.0.1",
+  "local_http_port": 20100,
+  "game_exe": "../Honkai Impact 3rd Game/BH3.exe",
+  "game_port": 21000,
+  "public_dispatch_base": "https://outer-dp-pc01.bh3.com",
+  "set_system_proxy": true,
+  "open_browser": true
+}

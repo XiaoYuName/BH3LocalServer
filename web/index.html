@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BH3 单机登录器</title>
+  <style>
+    :root {
+      --bg: #f4f1ea;
+      --card: #fffdf8;
+      --ink: #2b241c;
+      --muted: #7a6f63;
+      --line: #e6ddd0;
+      --accent: #c45c26;
+      --ok: #2f7d4a;
+      --bad: #b42318;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background:
+        radial-gradient(900px 420px at 10% -10%, #f7d9c4 0%, transparent 60%),
+        radial-gradient(700px 360px at 100% 0%, #d9e7f2 0%, transparent 55%),
+        var(--bg);
+      color: var(--ink);
+    }
+    .wrap { max-width: 980px; margin: 36px auto; padding: 0 20px 40px; }
+    h1 { margin: 0 0 6px; font-size: 28px; letter-spacing: .04em; }
+    .sub { color: var(--muted); margin-bottom: 22px; }
+    .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 16px; }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 18px 18px 16px;
+      box-shadow: 0 10px 30px rgba(70, 46, 20, .06);
+    }
+    .row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px dashed var(--line); }
+    .row:last-child { border-bottom: 0; }
+    .k { color: var(--muted); }
+    .v { font-weight: 600; }
+    .ok { color: var(--ok); }
+    .bad { color: var(--bad); }
+    .btns { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: 700;
+      background: var(--accent);
+      color: white;
+    }
+    button.ghost, a.ghost {
+      background: #efe7db;
+      color: var(--ink);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-weight: 700;
+    }
+    button:disabled { opacity: .55; cursor: wait; }
+    pre {
+      height: 280px;
+      overflow: auto;
+      background: #1f1a16;
+      color: #f3e6d6;
+      border-radius: 14px;
+      padding: 14px;
+      font-size: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+    .hint { margin-top: 10px; color: var(--muted); font-size: 13px; }
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>BH3 单机登录器</h1>
+    <div class="sub">不改 hosts。用本机 HTTPS 代理把 dispatch / SDK 指到本地桩服务，再启动官方客户端。</div>
+    <div class="grid">
+      <div class="card">
+        <div class="row"><span class="k">桩服务</span><span class="v" id="stub">检查中</span></div>
+        <div class="row"><span class="k">游戏服 UDP</span><span class="v" id="kcp">检查中</span></div>
+        <div class="row"><span class="k">MITM 代理</span><span class="v" id="proxy">检查中</span></div>
+        <div class="row"><span class="k">系统代理</span><span class="v" id="sys">检查中</span></div>
+        <div class="row"><span class="k">根证书文件</span><span class="v" id="cert">检查中</span></div>
+        <div class="row"><span class="k">根证书安装</span><span class="v" id="certInstall">检查中</span></div>
+        <div class="row"><span class="k">客户端</span><span class="v" id="game">检查中</span></div>
+        <div class="btns">
+          <button id="startBtn" onclick="act('/api/start')">一键启动本地链路</button>
+          <button class="ghost" onclick="act('/api/launch-game')">启动游戏</button>
+          <button class="ghost" onclick="act('/api/install-cert')">安装根证书</button>
+          <a class="ghost" href="/ca.cer">下载 ca.cer</a>
+          <button class="ghost" onclick="act('/api/stop')">停止并还原代理</button>
+        </div>
+        <div class="hint">点「安装根证书」后看任务栏/弹窗，选“是”。如果页面报 Failed to fetch，改点「下载 ca.cer」双击安装到“受信任的根证书颁发机构”。</div>
+      </div>
+      <div class="card">
+        <div class="row"><span class="k">本地桩</span><span class="v" id="stubAddr">-</span></div>
+        <div class="row"><span class="k">代理端口</span><span class="v" id="proxyAddr">-</span></div>
+        <div class="row"><span class="k">游戏路径</span><span class="v" id="gamePath">-</span></div>
+        <pre id="logs">等待日志...</pre>
+      </div>
+    </div>
+  </div>
+  <script>
+    const mark = (id, on, yes, no) => {
+      const el = document.getElementById(id);
+      el.textContent = on ? yes : no;
+      el.className = "v " + (on ? "ok" : "bad");
+    };
+    async function refresh() {
+      const s = await (await fetch("/api/status")).json();
+      mark("stub", s.stub, "运行中", "已停止");
+      mark("kcp", s.kcp, "运行中", "已停止");
+      mark("proxy", s.proxy, "运行中", "已停止");
+      mark("sys", s.system_proxy, "已接管", "未接管");
+      mark("cert", s.cert, "已生成", "未生成");
+      const installEl = document.getElementById("certInstall");
+      if (s.cert_installed) {
+        installEl.textContent = "已安装";
+        installEl.className = "v ok";
+      } else if (s.cert_installing) {
+        installEl.textContent = "等待确认弹窗";
+        installEl.className = "v";
+      } else {
+        installEl.textContent = "未安装";
+        installEl.className = "v bad";
+      }
+      mark("game", s.game, "已找到", "未找到");
+      document.getElementById("stubAddr").textContent = s.stub_addr;
+      document.getElementById("proxyAddr").textContent = s.proxy_addr;
+      document.getElementById("gamePath").textContent = s.game_exe;
+      document.getElementById("logs").textContent = s.logs || "暂无日志";
+      document.getElementById("logs").scrollTop = 99999;
+    }
+    async function act(url) {
+      const btn = document.getElementById("startBtn");
+      btn.disabled = true;
+      try {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), 8000);
+        const r = await fetch(url, { method: "POST", signal: ctrl.signal });
+        clearTimeout(timer);
+        const data = await r.json();
+        if (!r.ok) alert(data.error || "操作失败");
+        else if (url === "/api/install-cert") {
+          /* certutil 可能弹出确认框，页面只负责发起，结果看日志和状态 */
+        }
+      } catch (e) {
+        if (url === "/api/install-cert") {
+          /* 弹窗期间浏览器可能中断请求，不算失败 */
+        } else {
+          alert(String(e));
+        }
+      } finally {
+        btn.disabled = false;
+        refresh();
+      }
+    }
+    refresh();
+    setInterval(refresh, 1500);
+  </script>
+</body>
+</html>
