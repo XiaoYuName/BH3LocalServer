@@ -21,11 +21,11 @@ try {
         if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
     } finally { Pop-Location }
     $utf8 = New-Object Text.UTF8Encoding($false)
-    [IO.File]::WriteAllText((Join-Path $stage 'BH3.package.json'), '{"version":"1.2.4","launcher":"Launcher/BH3.Launcher.exe","server":"Server/BH3.Server.exe"}', $utf8)
+    [IO.File]::WriteAllText((Join-Path $stage 'BH3.package.json'), '{"version":"1.3.0","launcher":"Launcher/BH3.Launcher.exe","server":"Server/BH3.Server.exe"}', $utf8)
     [IO.File]::WriteAllText((Join-Path $stage 'Start.bat'), "@echo off`r`nstart `"`" `"%~dp0Launcher\BH3.Launcher.exe`"`r`n", $utf8)
     Copy-Item -LiteralPath (Join-Path $root 'docs\PACKAGE_README.txt') -Destination (Join-Path $stage 'README.txt')
     # Archive the clean staging build before migrating any local settings or player data.
-    $archive = if ($migrateLegacy) { Join-Path $root 'dist\BH3-Local-1.2.4-win-x64.zip' } else { $destination + '.zip' }
+    $archive = if ($migrateLegacy) { Join-Path $root 'dist\BH3-Local-1.3.0-win-x64.zip' } else { $destination + '.zip' }
     Compress-Archive -Path (Join-Path $stage '*') -DestinationPath $archive -Force
 
     # First migration only; original folders and existing destination files are retained.

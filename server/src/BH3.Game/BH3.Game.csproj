@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <EmbeddedResource Include="Lobby/starter.json" />
+    <EmbeddedResource Include="Campaign/chapter-one.json" />
     <ProjectReference Include="../BH3.Protocol/BH3.Protocol.csproj" />
     <ProjectReference Include="../BH3.Persistence/BH3.Persistence.csproj" />
   </ItemGroup>

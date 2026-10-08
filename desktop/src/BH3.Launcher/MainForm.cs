@@ -89,7 +89,7 @@ internal sealed class MainForm : Form
         var bottom = new TableLayoutPanel { Dock = DockStyle.Fill, ColumnCount = 2, Padding = new(22, 0, 22, 0), Margin = Padding.Empty };
         bottom.RowCount = 1; bottom.RowStyles.Add(new(SizeType.Percent, 100));
         bottom.ColumnStyles.Add(new(SizeType.Percent, 100)); bottom.ColumnStyles.Add(new(SizeType.Absolute, 300)); footer.Dock = DockStyle.Fill;
-        var version = Theme.Label("客户端 9.1.0    ·    桌面版 1.2.4", 9, Theme.Muted); version.Dock = DockStyle.Fill; version.TextAlign = ContentAlignment.MiddleRight;
+        var version = Theme.Label("客户端 9.1.0    ·    桌面版 1.3.0", 9, Theme.Muted); version.Dock = DockStyle.Fill; version.TextAlign = ContentAlignment.MiddleRight;
         bottom.Controls.Add(footer, 0, 0); bottom.Controls.Add(version, 1, 0); shell.Controls.Add(bottom, 0, 2); Controls.Add(shell);
     }
     private void BuildHome()
@@ -153,7 +153,7 @@ internal sealed class MainForm : Form
     private void BuildAbout()
     {
         var page = new Panel { Dock = DockStyle.Fill, BackColor = Theme.Surface, Padding = new(32), AutoScroll = true };
-        var text = new TextBox { Dock = DockStyle.Fill, Multiline = true, ReadOnly = true, BorderStyle = BorderStyle.None, BackColor = Theme.Surface, ForeColor = Theme.Text, Font = Theme.Font(12), ScrollBars = ScrollBars.Vertical, Text = "崩坏 3 · 本地登录器\r\n桌面版 1.2.4  /  2026.10.09\r\n\r\n原生 Windows 窗口\r\n参考 115CN 的顶部导航、主视觉和固定启动区布局。\r\n\r\n本次更新\r\n• 接入经过两份真实样本验证的 9.1 dispatch 密钥。\r\n• 本地接口、HTTPS 代理、证书和进程管理迁入 .NET。\r\n• 新增客户端选择、本地账号、设置、实时日志及诊断导出。\r\n• 退出恢复原系统代理；端口冲突自动清理本次启动。\r\n• 发布包同时包含登录器和服务端，自动定位并托管。\r\n• 启动时核对服务端就绪状态，退出时正常停服。\r\n\r\n当前范围\r\n提供本地 SDK、KCP、账号认证与大厅基础数据。\r\n战斗、任务奖励等玩法仍在开发。\r\n服务端随登录器一起发布，无需手动启动服务端。\r\n\r\n本地账号仅用于此测试环境，请勿填写正式账号密码。" };
+        var text = new TextBox { Dock = DockStyle.Fill, Multiline = true, ReadOnly = true, BorderStyle = BorderStyle.None, BackColor = Theme.Surface, ForeColor = Theme.Text, Font = Theme.Font(12), ScrollBars = ScrollBars.Vertical, Text = "崩坏 3 · 本地登录器\r\n桌面版 1.3.0  /  2026.10.09\r\n\r\n原生 Windows 窗口\r\n参考 115CN 的顶部导航、主视觉和固定启动区布局。\r\n\r\n本次更新\r\n• 接入经过两份真实样本验证的 9.1 dispatch 密钥。\r\n• 本地接口、HTTPS 代理、证书和进程管理迁入 .NET。\r\n• 新增客户端选择、本地账号、设置、实时日志及诊断导出。\r\n• 退出恢复原系统代理；端口冲突自动清理本次启动。\r\n• 发布包同时包含登录器和服务端，自动定位并托管。\r\n• 启动时核对服务端就绪状态，退出时正常停服。\r\n\r\n当前范围\r\n提供本地 SDK、KCP、账号认证与大厅基础数据。\r\n第一章出击、通关结算和任务领奖已接入；实机待验收。\r\n服务端随登录器一起发布，无需手动启动服务端。\r\n\r\n本地账号仅用于此测试环境，请勿填写正式账号密码。" };
         page.Controls.Add(text); pages["版本信息"] = page;
     }
     private void ShowPage(string name)

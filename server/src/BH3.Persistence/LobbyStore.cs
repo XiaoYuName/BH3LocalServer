@@ -2,10 +2,11 @@ using System.Text.Json;
 
 namespace BH3.Persistence;
 
-public sealed record LobbyState(uint Level, uint Stamina, uint AvatarId, uint WeaponId, uint DressId, uint RegisteredAt, uint[] CompletedGuides);
+public sealed record LobbyState(uint Level, uint Stamina, uint AvatarId, uint WeaponId, uint DressId, uint RegisteredAt, uint[] CompletedGuides,
+    uint Exp = 0, uint Scoin = 0, uint Hcoin = 0, uint AvatarLevel = 1, uint AvatarExp = 0, uint StaminaUpdatedAt = 0);
 public sealed record ClientBlob(int Type, uint Id, byte[] Data);
 
-public sealed class LobbyStore(SqliteConnectionFactory factory)
+public sealed partial class LobbyStore(SqliteConnectionFactory factory)
 {
     public void EnsurePlayer(uint uid, string name, LobbyState initial)
     {

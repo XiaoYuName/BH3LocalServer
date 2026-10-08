@@ -9,7 +9,7 @@
     <ApplicationIcon>..\..\Resources\launcher.ico</ApplicationIcon>
     <AssemblyName>BH3.Launcher</AssemblyName>
     <RootNamespace>BH3.Launcher</RootNamespace>
-    <Version>1.2.4</Version>
+    <Version>1.3.0</Version>
     <Product>崩坏 3 · 本地登录器</Product>
     <Description>原生 Windows 桌面登录器</Description>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>

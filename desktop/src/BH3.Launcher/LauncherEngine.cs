@@ -185,7 +185,7 @@ internal sealed class LauncherEngine : IDisposable
     {
         using var zip = ZipFile.Open(path, ZipArchiveMode.Create);
         using (var writer = new StreamWriter(zip.CreateEntry("运行记录.txt").Open())) writer.Write(string.Join(Environment.NewLine, Log.Snapshot()));
-        using (var writer = new StreamWriter(zip.CreateEntry("状态.json").Open())) writer.Write(JsonSerializer.Serialize(new { desktop = true, version = "1.2.4", client = File.Exists(Config.GameExe), Running, GameRunning, system_proxy_owned = Proxy.Active, Config.HttpPort, Config.ProxyPort, Config.GamePort, managed_game_server = Config.ResolveServerExe().Length > 0, key_version = "9.1.0", gameplay = "not-verified" }, LauncherConfig.Json));
+        using (var writer = new StreamWriter(zip.CreateEntry("状态.json").Open())) writer.Write(JsonSerializer.Serialize(new { desktop = true, version = "1.3.0", client = File.Exists(Config.GameExe), Running, GameRunning, system_proxy_owned = Proxy.Active, Config.HttpPort, Config.ProxyPort, Config.GamePort, managed_game_server = Config.ResolveServerExe().Length > 0, key_version = "9.1.0", gameplay = "not-verified" }, LauncherConfig.Json));
         // Certificate private keys, proxy snapshots and SDK request bodies are deliberately excluded.
     }
     public void Dispose()

@@ -4,7 +4,7 @@ namespace BH3.Persistence;
 
 public static class SchemaMigrator
 {
-    public const int CurrentVersion = 2;
+    public const int CurrentVersion = 3;
     public const int ApplicationId = 0x42483353;
     public static int Version(SqliteConnection connection, SqliteTransaction? transaction = null)
     {
@@ -64,6 +64,24 @@ public static class SchemaMigrator
                     PRIMARY KEY(uid,type,id)
                 );
                 PRAGMA user_version = 2;
+                """;
+            command.ExecuteNonQuery();
+        }
+        if (version < 3)
+        {
+            using var command = connection.CreateCommand(); command.Transaction = transaction;
+            command.CommandText = """
+                CREATE TABLE player_campaign (
+                    uid INTEGER PRIMARY KEY REFERENCES player_profile(uid) ON DELETE CASCADE,
+                    data_json TEXT NOT NULL
+                );
+                CREATE TABLE stage_receipt (
+                    uid INTEGER NOT NULL REFERENCES player_profile(uid) ON DELETE CASCADE,
+                    fingerprint TEXT NOT NULL,
+                    response BLOB NOT NULL,
+                    PRIMARY KEY(uid,fingerprint)
+                );
+                PRAGMA user_version = 3;
                 """;
             command.ExecuteNonQuery();
         }

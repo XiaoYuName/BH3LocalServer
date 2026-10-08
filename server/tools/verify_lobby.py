@@ -24,10 +24,12 @@ parser.add_argument('--startup-fixture', help='Known request/response IDs from t
 parser.add_argument('--observe-client-contracts', action='store_true', help='Record four client 9.1 response requirements for baseline/modified comparison.')
 parser.add_argument('--observe-overall', action='store_true', help='Compare 7842 full/selected queries and 7843 snapshot flags on both KCP framings.')
 parser.add_argument('--observe-init-selectors', action='store_true', help='Observe client 9.1 zero-ID initialization selectors and selected queries.')
+parser.add_argument('--observe-campaign', action='store_true', help='Exercise chapter-one begin/end/rewards/restart using independent wire payloads.')
 args = parser.parse_args()
 work = Path(tempfile.mkdtemp(prefix='bh3-lobby-'))
 events, checks, client_contracts, overall_contracts = [], [], [], []
 init_selector_contracts = []
+campaign_contracts, campaign_contexts = [], {}
 retired_sockets = []
 completed = False
 key = os.urandom(32)
@@ -185,6 +187,8 @@ class Peer:
         data = prefix + struct.pack('>HHI', command, 0, len(body)) + body + struct.pack('>I', 0x89abcdef)
         assert native.ikcp_send(self.ptr, data, len(data)) == 0
         deadline = time.monotonic() + timeout
+        primary, snapshots = None, set()
+        self.last_snapshots = {}
         while time.monotonic() < deadline:
             native.ikcp_update(self.ptr, int(time.monotonic()*1000) & 0xffffffff)
             try:
@@ -196,12 +200,28 @@ class Peer:
                 pass
             buffer = ctypes.create_string_buffer(200000)
             length = native.ikcp_recv(self.ptr, buffer, len(buffer))
-            if length >= 0:
+            while length >= 0:
                 message = buffer.raw[:length]
                 assert message[:4] == bytes.fromhex('01234567') and message[-4:] == bytes.fromhex('89abcdef')
                 response_id, metadata_size, size = struct.unpack_from('>HHI', message, 26)
-                self.last_response_body = message[34+metadata_size:34+metadata_size+size]
-                return response_id, fields(message[34+metadata_size:34+metadata_size+size]), struct.unpack_from('>I', message, 12)[0]
+                raw = message[34+metadata_size:34+metadata_size+size]
+                decoded = fields(raw)
+                if primary is None:
+                    self.last_response_body = raw
+                    primary = (response_id, decoded, struct.unpack_from('>I', message, 12)[0])
+                    if command not in (43, 45, 114, 458) or decoded.get(1) != [0]:
+                        return primary
+                    snapshots = {11, 42, 113, 25, 27}
+                elif response_id in snapshots:
+                    self.last_snapshots[response_id] = decoded
+                    snapshots.remove(response_id)
+                else:
+                    raise AssertionError(('unexpected queued response', command, response_id))
+                if not snapshots:
+                    return primary
+                length = native.ikcp_recv(self.ptr, buffer, len(buffer))
+        if primary is not None:
+            raise TimeoutError(('missing committed snapshots', command, snapshots))
         return None
     def login(self, uid):
         result = self.request(4, integer(1, 1) + blob(2, str(uid)) + blob(6, '9.1.0') + blob(23, ticket(uid)))
@@ -240,6 +260,55 @@ def observe_init_selectors(peer, framing, uid):
             init_selector_contracts.append(dict(name=f'{framing}: {command} ' + ('selected' if selected else 'zero/full'),
                 request_hex=body.hex(), response_body_hex=peer.last_response_body.hex() if reply else None,
                 is_all=data.get(flag_field), item_count=count, passed=passed))
+
+
+def observe_campaign(peer, framing, uid, restart=False):
+    def observe(name, passed, request=b''):
+        campaign_contracts.append(dict(name=f'{framing}: {name}', passed=bool(passed), request_hex=request.hex(),
+            response_body_hex=peer.last_response_body.hex()))
+    if restart:
+        end_request, end_response, expected_wallet = campaign_contexts[uid]
+        result = peer.request(45, end_request)
+        observe('settlement receipt survives process restart', result is not None and peer.last_response_body == end_response, end_request)
+        main = peer.request(10)
+        observe('wallet and completed stage survive process restart', main[1].get(6) == [expected_wallet]
+                and fields(peer.request(41, integer(1, 10101))[1][2][0]).get(2) == [1])
+        return
+    stage_list = peer.request(41, integer(1, 0))
+    observe('chapter-one stage catalog', stage_list is not None and len(stage_list[1].get(2, [])) == 15)
+    missions = peer.request(112)
+    observe('mainline missions available', missions is not None and len(missions[1].get(2, [])) > 0)
+    for cmd in (121, 476, 502, 813, 6706, 4167, 3460):
+        reply = peer.request(cmd)
+        observe(f'logged unsupported request {cmd} answered', reply is not None and reply[0] == cmd + 1)
+    payload = integer(1, 10101) + integer(2, 101) + integer(2, 0) + integer(2, 0)
+    begin = peer.request(43, payload)
+    observe('enter stage 10101', begin is not None and begin[0] == 44 and begin[1].get(1) == [0], payload)
+    if begin is None or begin[1].get(1) != [0]:
+        return
+    initial_begin = peer.last_response_body
+    observe('begin pushes stamina reservation', peer.last_snapshots[11].get(7) == [74])
+    retry = peer.request(43, payload)
+    observe('begin retry does not charge twice', peer.last_response_body == initial_begin and peer.last_snapshots[11].get(7) == [74], payload)
+    body = integer(1, 10101) + integer(2, 1) + integer(4, 999999) + integer(5, 999999) + b''.join(integer(6, i) for i in range(3)) + integer(10, 55000) + integer(12, 1234)
+    end_request = blob(1, body) + blob(2, begin[1][6][0])
+    end = peer.request(45, end_request); end_response = peer.last_response_body
+    observe('win settles server rewards and first clear', end is not None and end[1].get(3) == [6] and end[1].get(4) == [25]
+            and end[1].get(5) == [750] and end[1].get(37) == [1] and len(end[1].get(6, [])) == 3, end_request)
+    observe('wallet snapshots reflect settlement', peer.last_snapshots[11].get(6) == [750] and peer.last_snapshots[11].get(5) == [15])
+    peer.request(45, end_request)
+    observe('end retry returns exact receipt and same wallet', peer.last_response_body == end_response and peer.last_snapshots[11].get(6) == [750], end_request)
+    claim_request = integer(1, 10001)
+    claim = peer.request(114, claim_request)
+    observe('completed mainline mission can be claimed', claim is not None and claim[1].get(1) == [0] and fields(claim[1][2][0]).get(1) == [12], claim_request)
+    duplicate = peer.request(114, claim_request)
+    observe('mission reward cannot be claimed twice', duplicate is not None and duplicate[1].get(1) == [3], claim_request)
+    next_begin = peer.request(43, integer(1, 10102) + integer(2, 101))
+    observe('completion unlocks next stage', next_begin is not None and next_begin[1].get(1) == [0])
+    exit_request = blob(1, integer(1, 10102) + integer(2, 4)) + blob(2, next_begin[1][6][0])
+    exit_result = peer.request(45, exit_request)
+    observe('exit closes run without rewards or completion', exit_result[1].get(8) == [0] and peer.last_snapshots[11].get(6) == [750], exit_request)
+    campaign_contexts[uid] = (end_request, end_response, 750)
 
 
 proc = None
@@ -284,6 +353,8 @@ try:
                     reply = peer.request(7842, body)
                     overall_contracts.append(dict(name=name, request_hex=body.hex(), response=reply,
                         passed=reply is not None and reply[0] == 7843 and reply[2] == 10001 and reply[1] == {1: [0], 3: [flag]}))
+            if args.observe_campaign:
+                observe_campaign(peer, '32-bit', 10001)
     finally:
         peer.close()
     if not args.baseline:
@@ -300,6 +371,8 @@ try:
                     passed=reply is not None and reply[0] == 7843 and reply[2] == 10002 and reply[1] == {1: [0], 3: [1]}))
             other = peer.request(1586, integer(1, 1) + integer(2, 42))
             check('Other account cannot read client settings', 4 not in other[1])
+            if args.observe_campaign:
+                observe_campaign(peer, '64-bit', 10002)
         finally:
             peer.close()
         stop(proc); proc = start(); peer = Peer()
@@ -309,6 +382,8 @@ try:
             check('Client settings survive restart', fields(loaded[1][4][0])[3] == [b'persist-after-restart'])
             if args.startup_fixture:
                 check('Completed guide survives restart', 999001 in peer.request(127)[1][2])
+            if args.observe_campaign and 10001 in campaign_contexts:
+                observe_campaign(peer, 'restart', 10001, restart=True)
         finally:
             peer.close()
     completed = True
@@ -321,7 +396,10 @@ finally:
         checks=checks, events=events, data_directory=str(work),
         server_sha256=hashlib.sha256(Path(args.server).read_bytes()).hexdigest(),
         native_kcp_sha256=hashlib.sha256(Path(args.native_kcp).read_bytes()).hexdigest(), real_game_client=False,
-        client_contracts=client_contracts, overall_contracts=overall_contracts, init_selector_contracts=init_selector_contracts)
+        client_contracts=client_contracts, overall_contracts=overall_contracts, init_selector_contracts=init_selector_contracts,
+        campaign_contracts=campaign_contracts)
+    for contract in campaign_contracts:
+        print('CAMPAIGN_CONTRACT', json.dumps(contract), flush=True)
     for contract in init_selector_contracts:
         print('INIT_SELECTOR_CONTRACT', json.dumps(contract), flush=True)
     for contract in overall_contracts:

@@ -1,0 +1,1704 @@
+{
+  "schema": 1,
+  "sourceFiles": {
+    "StageData_Main": "6fe2f77dc930965a8b832843df49e430c3e2ccd892607345b2cd877f78c83783",
+    "MissionData": "8b84bd00b0309a4e339e8772bef20d0780546c850c7dc1b56c4ca959c552154f",
+    "ActChallengeData": "e17b0dbfd60b72e9bd66bc42976f603dac616058bb37d2d1d9c8dc019d26e546",
+    "RewardData": "c7b4c6959834f6864687cccc5f457709e5dddf89ab50650d0c99697eec3e6ad3",
+    "PlayerLevelData": "8e0e4297b455232a37971602cfbc294e6fb5bd7869a5001c79bbcc51afcc9dbf",
+    "AvatarLevelData": "242268ddfad65b7efc720f08acaceb06d8f6a459c3c4ad0b07cb7abf73f13460"
+  },
+  "stages": [
+    {
+      "id": 10101,
+      "chapter": 1,
+      "act": 101,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 25,
+      "scoin": 750,
+      "previous": [],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-1 5.6.lua"
+    },
+    {
+      "id": 10102,
+      "chapter": 1,
+      "act": 101,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 25,
+      "scoin": 750,
+      "previous": [
+        10101
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-2 5.6.lua"
+    },
+    {
+      "id": 10103,
+      "chapter": 1,
+      "act": 104,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 26,
+      "scoin": 750,
+      "previous": [],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-3 5.6.lua"
+    },
+    {
+      "id": 10104,
+      "chapter": 1,
+      "act": 104,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 26,
+      "scoin": 750,
+      "previous": [
+        10103
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_2.4/Fixed Level 1-4.lua"
+    },
+    {
+      "id": 10105,
+      "chapter": 1,
+      "act": 101,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 26,
+      "scoin": 750,
+      "previous": [
+        10102
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-3 5.6.lua"
+    },
+    {
+      "id": 10106,
+      "chapter": 1,
+      "act": 102,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 46,
+      "scoin": 750,
+      "previous": [
+        10105
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-4 5.6.lua"
+    },
+    {
+      "id": 10107,
+      "chapter": 1,
+      "act": 104,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 26,
+      "scoin": 750,
+      "previous": [
+        10103
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-5 5.6.lua"
+    },
+    {
+      "id": 10108,
+      "chapter": 1,
+      "act": 104,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 27,
+      "scoin": 750,
+      "previous": [
+        10103
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_2.4/Fixed Level 1-8.lua"
+    },
+    {
+      "id": 10109,
+      "chapter": 1,
+      "act": 102,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 26,
+      "scoin": 750,
+      "previous": [
+        10106
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-5 5.6.lua"
+    },
+    {
+      "id": 10110,
+      "chapter": 1,
+      "act": 104,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 27,
+      "scoin": 750,
+      "previous": [
+        10103
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_2.4/Fixed Level 1-10.lua"
+    },
+    {
+      "id": 10111,
+      "chapter": 1,
+      "act": 104,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 28,
+      "scoin": 750,
+      "previous": [
+        10103
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_2.4/Fixed Level 1-11.lua"
+    },
+    {
+      "id": 10112,
+      "chapter": 1,
+      "act": 103,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 28,
+      "scoin": 750,
+      "previous": [
+        10109
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-6 5.6.lua"
+    },
+    {
+      "id": 10113,
+      "chapter": 1,
+      "act": 103,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 28,
+      "scoin": 750,
+      "previous": [
+        10112
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-7 5.6.lua"
+    },
+    {
+      "id": 10114,
+      "chapter": 1,
+      "act": 103,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 28,
+      "scoin": 750,
+      "previous": [
+        10113
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-8 5.6.lua"
+    },
+    {
+      "id": 10115,
+      "chapter": 1,
+      "act": 103,
+      "level": 1,
+      "cost": 6,
+      "exp": 6,
+      "avatarExp": 28,
+      "scoin": 750,
+      "previous": [
+        10114
+      ],
+      "challenges": [
+        1,
+        1,
+        1
+      ],
+      "lua": "Lua/Levels/MainLine_Stage01_5.6/Level 1-9 5.6.lua"
+    }
+  ],
+  "missions": [
+    {
+      "id": 10001,
+      "way": 10180,
+      "target": 10101,
+      "total": 1,
+      "reward": 10001,
+      "step": 0
+    },
+    {
+      "id": 10002,
+      "way": 10180,
+      "target": 10102,
+      "total": 1,
+      "reward": 10002,
+      "step": 0
+    },
+    {
+      "id": 10005,
+      "way": 10180,
+      "target": 10105,
+      "total": 1,
+      "reward": 10005,
+      "step": 0
+    },
+    {
+      "id": 10006,
+      "way": 10180,
+      "target": 10106,
+      "total": 1,
+      "reward": 10006,
+      "step": 0
+    },
+    {
+      "id": 10009,
+      "way": 10180,
+      "target": 10109,
+      "total": 1,
+      "reward": 10009,
+      "step": 0
+    },
+    {
+      "id": 10012,
+      "way": 10180,
+      "target": 10112,
+      "total": 1,
+      "reward": 10012,
+      "step": 0
+    },
+    {
+      "id": 10013,
+      "way": 10180,
+      "target": 10113,
+      "total": 1,
+      "reward": 10013,
+      "step": 0
+    },
+    {
+      "id": 10014,
+      "way": 10180,
+      "target": 10114,
+      "total": 1,
+      "reward": 10014,
+      "step": 0
+    },
+    {
+      "id": 10015,
+      "way": 10180,
+      "target": 10115,
+      "total": 1,
+      "reward": 10015,
+      "step": 0
+    },
+    {
+      "id": 97001,
+      "way": 10171,
+      "target": 0,
+      "total": 5,
+      "reward": 18051,
+      "step": 1
+    },
+    {
+      "id": 97002,
+      "way": 10180,
+      "target": 10108,
+      "total": 1,
+      "reward": 18052,
+      "step": 2
+    },
+    {
+      "id": 97003,
+      "way": 10171,
+      "target": 0,
+      "total": 10,
+      "reward": 18053,
+      "step": 2
+    }
+  ],
+  "acts": [
+    {
+      "id": 101,
+      "thresholds": [
+        4,
+        6,
+        9
+      ],
+      "rewards": [
+        990011,
+        990012,
+        990013
+      ]
+    },
+    {
+      "id": 102,
+      "thresholds": [
+        3,
+        5,
+        6
+      ],
+      "rewards": [
+        990041,
+        990042,
+        990043
+      ]
+    },
+    {
+      "id": 103,
+      "thresholds": [
+        6,
+        9,
+        12
+      ],
+      "rewards": [
+        990071,
+        990072,
+        990073
+      ]
+    },
+    {
+      "id": 104,
+      "thresholds": [
+        7,
+        11,
+        15
+      ],
+      "rewards": [
+        990101,
+        990102,
+        990103
+      ]
+    }
+  ],
+  "rewards": [
+    {
+      "id": 1,
+      "exp": 0,
+      "hcoin": 5,
+      "stamina": 0,
+      "scoin": 0,
+      "items": []
+    },
+    {
+      "id": 10001,
+      "exp": 12,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 0,
+      "items": [
+        {
+          "id": 30004,
+          "level": 1,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": 10002,
+      "exp": 12,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 0,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 2
+        }
+      ]
+    },
+    {
+      "id": 10005,
+      "exp": 0,
+      "hcoin": 0,
+      "stamina": 6,
+      "scoin": 0,
+      "items": [
+        {
+          "id": 60201,
+          "level": 0,
+          "num": 1
+        }
+      ]
+    },
+    {
+      "id": 10006,
+      "exp": 18,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 610,
+      "items": []
+    },
+    {
+      "id": 10009,
+      "exp": 12,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 640,
+      "items": []
+    },
+    {
+      "id": 10012,
+      "exp": 12,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 660,
+      "items": []
+    },
+    {
+      "id": 10013,
+      "exp": 12,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 690,
+      "items": []
+    },
+    {
+      "id": 10014,
+      "exp": 12,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 690,
+      "items": []
+    },
+    {
+      "id": 10015,
+      "exp": 12,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 690,
+      "items": []
+    },
+    {
+      "id": 18051,
+      "exp": 0,
+      "hcoin": 50,
+      "stamina": 0,
+      "scoin": 10000,
+      "items": []
+    },
+    {
+      "id": 18052,
+      "exp": 0,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 15000,
+      "items": [
+        {
+          "id": 10101,
+          "level": 0,
+          "num": 5
+        }
+      ]
+    },
+    {
+      "id": 18053,
+      "exp": 0,
+      "hcoin": 50,
+      "stamina": 0,
+      "scoin": 20000,
+      "items": []
+    },
+    {
+      "id": 990011,
+      "exp": 0,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 4000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 7
+        }
+      ]
+    },
+    {
+      "id": 990012,
+      "exp": 0,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 6000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 13
+        },
+        {
+          "id": 1001,
+          "level": 0,
+          "num": 30
+        }
+      ]
+    },
+    {
+      "id": 990013,
+      "exp": 0,
+      "hcoin": 30,
+      "stamina": 0,
+      "scoin": 8000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 21
+        }
+      ]
+    },
+    {
+      "id": 990041,
+      "exp": 0,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 4000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 7
+        }
+      ]
+    },
+    {
+      "id": 990042,
+      "exp": 0,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 6000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 15
+        },
+        {
+          "id": 1001,
+          "level": 0,
+          "num": 30
+        }
+      ]
+    },
+    {
+      "id": 990043,
+      "exp": 0,
+      "hcoin": 30,
+      "stamina": 0,
+      "scoin": 8000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 22
+        }
+      ]
+    },
+    {
+      "id": 990071,
+      "exp": 0,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 4000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 7
+        }
+      ]
+    },
+    {
+      "id": 990072,
+      "exp": 0,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 6000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 15
+        },
+        {
+          "id": 1001,
+          "level": 0,
+          "num": 30
+        }
+      ]
+    },
+    {
+      "id": 990073,
+      "exp": 0,
+      "hcoin": 30,
+      "stamina": 0,
+      "scoin": 10000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 22
+        }
+      ]
+    },
+    {
+      "id": 990101,
+      "exp": 0,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 4000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 7
+        }
+      ]
+    },
+    {
+      "id": 990102,
+      "exp": 0,
+      "hcoin": 0,
+      "stamina": 0,
+      "scoin": 8000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 16
+        },
+        {
+          "id": 1001,
+          "level": 0,
+          "num": 30
+        }
+      ]
+    },
+    {
+      "id": 990103,
+      "exp": 0,
+      "hcoin": 30,
+      "stamina": 0,
+      "scoin": 10000,
+      "items": [
+        {
+          "id": 3000,
+          "level": 0,
+          "num": 24
+        }
+      ]
+    }
+  ],
+  "levels": [
+    {
+      "level": 1,
+      "exp": 23,
+      "stamina": 80,
+      "bonus": 0,
+      "avatarLimit": 15
+    },
+    {
+      "level": 2,
+      "exp": 28,
+      "stamina": 81,
+      "bonus": 10,
+      "avatarLimit": 15
+    },
+    {
+      "level": 3,
+      "exp": 33,
+      "stamina": 82,
+      "bonus": 12,
+      "avatarLimit": 15
+    },
+    {
+      "level": 4,
+      "exp": 39,
+      "stamina": 83,
+      "bonus": 14,
+      "avatarLimit": 15
+    },
+    {
+      "level": 5,
+      "exp": 43,
+      "stamina": 84,
+      "bonus": 16,
+      "avatarLimit": 15
+    },
+    {
+      "level": 6,
+      "exp": 47,
+      "stamina": 85,
+      "bonus": 18,
+      "avatarLimit": 15
+    },
+    {
+      "level": 7,
+      "exp": 51,
+      "stamina": 86,
+      "bonus": 20,
+      "avatarLimit": 15
+    },
+    {
+      "level": 8,
+      "exp": 60,
+      "stamina": 87,
+      "bonus": 22,
+      "avatarLimit": 15
+    },
+    {
+      "level": 9,
+      "exp": 69,
+      "stamina": 88,
+      "bonus": 24,
+      "avatarLimit": 15
+    },
+    {
+      "level": 10,
+      "exp": 79,
+      "stamina": 90,
+      "bonus": 26,
+      "avatarLimit": 15
+    },
+    {
+      "level": 11,
+      "exp": 83,
+      "stamina": 91,
+      "bonus": 28,
+      "avatarLimit": 15
+    },
+    {
+      "level": 12,
+      "exp": 87,
+      "stamina": 92,
+      "bonus": 30,
+      "avatarLimit": 15
+    },
+    {
+      "level": 13,
+      "exp": 105,
+      "stamina": 93,
+      "bonus": 32,
+      "avatarLimit": 15
+    },
+    {
+      "level": 14,
+      "exp": 123,
+      "stamina": 94,
+      "bonus": 34,
+      "avatarLimit": 15
+    },
+    {
+      "level": 15,
+      "exp": 166,
+      "stamina": 95,
+      "bonus": 36,
+      "avatarLimit": 15
+    },
+    {
+      "level": 16,
+      "exp": 181,
+      "stamina": 96,
+      "bonus": 38,
+      "avatarLimit": 16
+    },
+    {
+      "level": 17,
+      "exp": 197,
+      "stamina": 97,
+      "bonus": 40,
+      "avatarLimit": 17
+    },
+    {
+      "level": 18,
+      "exp": 234,
+      "stamina": 98,
+      "bonus": 42,
+      "avatarLimit": 18
+    },
+    {
+      "level": 19,
+      "exp": 271,
+      "stamina": 99,
+      "bonus": 44,
+      "avatarLimit": 19
+    },
+    {
+      "level": 20,
+      "exp": 306,
+      "stamina": 100,
+      "bonus": 46,
+      "avatarLimit": 20
+    },
+    {
+      "level": 21,
+      "exp": 328,
+      "stamina": 101,
+      "bonus": 48,
+      "avatarLimit": 21
+    },
+    {
+      "level": 22,
+      "exp": 350,
+      "stamina": 102,
+      "bonus": 50,
+      "avatarLimit": 22
+    },
+    {
+      "level": 23,
+      "exp": 393,
+      "stamina": 103,
+      "bonus": 52,
+      "avatarLimit": 23
+    },
+    {
+      "level": 24,
+      "exp": 436,
+      "stamina": 104,
+      "bonus": 54,
+      "avatarLimit": 24
+    },
+    {
+      "level": 25,
+      "exp": 518,
+      "stamina": 105,
+      "bonus": 56,
+      "avatarLimit": 25
+    },
+    {
+      "level": 26,
+      "exp": 541,
+      "stamina": 106,
+      "bonus": 58,
+      "avatarLimit": 26
+    },
+    {
+      "level": 27,
+      "exp": 564,
+      "stamina": 107,
+      "bonus": 60,
+      "avatarLimit": 27
+    },
+    {
+      "level": 28,
+      "exp": 612,
+      "stamina": 108,
+      "bonus": 60,
+      "avatarLimit": 28
+    },
+    {
+      "level": 29,
+      "exp": 660,
+      "stamina": 109,
+      "bonus": 60,
+      "avatarLimit": 29
+    },
+    {
+      "level": 30,
+      "exp": 715,
+      "stamina": 110,
+      "bonus": 60,
+      "avatarLimit": 30
+    },
+    {
+      "level": 31,
+      "exp": 739,
+      "stamina": 111,
+      "bonus": 60,
+      "avatarLimit": 31
+    },
+    {
+      "level": 32,
+      "exp": 762,
+      "stamina": 112,
+      "bonus": 60,
+      "avatarLimit": 32
+    },
+    {
+      "level": 33,
+      "exp": 811,
+      "stamina": 113,
+      "bonus": 60,
+      "avatarLimit": 33
+    },
+    {
+      "level": 34,
+      "exp": 859,
+      "stamina": 114,
+      "bonus": 60,
+      "avatarLimit": 34
+    },
+    {
+      "level": 35,
+      "exp": 980,
+      "stamina": 115,
+      "bonus": 60,
+      "avatarLimit": 35
+    },
+    {
+      "level": 36,
+      "exp": 1005,
+      "stamina": 116,
+      "bonus": 60,
+      "avatarLimit": 36
+    },
+    {
+      "level": 37,
+      "exp": 1030,
+      "stamina": 117,
+      "bonus": 60,
+      "avatarLimit": 37
+    },
+    {
+      "level": 38,
+      "exp": 1082,
+      "stamina": 118,
+      "bonus": 60,
+      "avatarLimit": 38
+    },
+    {
+      "level": 39,
+      "exp": 1135,
+      "stamina": 119,
+      "bonus": 60,
+      "avatarLimit": 39
+    },
+    {
+      "level": 40,
+      "exp": 1159,
+      "stamina": 120,
+      "bonus": 60,
+      "avatarLimit": 40
+    },
+    {
+      "level": 41,
+      "exp": 1182,
+      "stamina": 121,
+      "bonus": 60,
+      "avatarLimit": 41
+    },
+    {
+      "level": 42,
+      "exp": 1206,
+      "stamina": 122,
+      "bonus": 60,
+      "avatarLimit": 42
+    },
+    {
+      "level": 43,
+      "exp": 1271,
+      "stamina": 123,
+      "bonus": 60,
+      "avatarLimit": 43
+    },
+    {
+      "level": 44,
+      "exp": 1335,
+      "stamina": 124,
+      "bonus": 60,
+      "avatarLimit": 44
+    },
+    {
+      "level": 45,
+      "exp": 1372,
+      "stamina": 125,
+      "bonus": 60,
+      "avatarLimit": 45
+    },
+    {
+      "level": 46,
+      "exp": 1407,
+      "stamina": 126,
+      "bonus": 60,
+      "avatarLimit": 46
+    },
+    {
+      "level": 47,
+      "exp": 1443,
+      "stamina": 127,
+      "bonus": 60,
+      "avatarLimit": 47
+    },
+    {
+      "level": 48,
+      "exp": 1520,
+      "stamina": 128,
+      "bonus": 60,
+      "avatarLimit": 48
+    },
+    {
+      "level": 49,
+      "exp": 1595,
+      "stamina": 129,
+      "bonus": 60,
+      "avatarLimit": 49
+    },
+    {
+      "level": 50,
+      "exp": 1630,
+      "stamina": 130,
+      "bonus": 60,
+      "avatarLimit": 50
+    },
+    {
+      "level": 51,
+      "exp": 1664,
+      "stamina": 131,
+      "bonus": 60,
+      "avatarLimit": 51
+    },
+    {
+      "level": 52,
+      "exp": 1698,
+      "stamina": 132,
+      "bonus": 60,
+      "avatarLimit": 52
+    },
+    {
+      "level": 53,
+      "exp": 1772,
+      "stamina": 133,
+      "bonus": 60,
+      "avatarLimit": 53
+    },
+    {
+      "level": 54,
+      "exp": 1845,
+      "stamina": 134,
+      "bonus": 60,
+      "avatarLimit": 54
+    },
+    {
+      "level": 55,
+      "exp": 1878,
+      "stamina": 135,
+      "bonus": 60,
+      "avatarLimit": 55
+    },
+    {
+      "level": 56,
+      "exp": 1910,
+      "stamina": 136,
+      "bonus": 60,
+      "avatarLimit": 56
+    },
+    {
+      "level": 57,
+      "exp": 1943,
+      "stamina": 137,
+      "bonus": 60,
+      "avatarLimit": 57
+    },
+    {
+      "level": 58,
+      "exp": 1977,
+      "stamina": 138,
+      "bonus": 60,
+      "avatarLimit": 58
+    },
+    {
+      "level": 59,
+      "exp": 2012,
+      "stamina": 139,
+      "bonus": 60,
+      "avatarLimit": 59
+    },
+    {
+      "level": 60,
+      "exp": 2048,
+      "stamina": 140,
+      "bonus": 60,
+      "avatarLimit": 60
+    },
+    {
+      "level": 61,
+      "exp": 2086,
+      "stamina": 141,
+      "bonus": 60,
+      "avatarLimit": 61
+    },
+    {
+      "level": 62,
+      "exp": 2127,
+      "stamina": 142,
+      "bonus": 60,
+      "avatarLimit": 62
+    },
+    {
+      "level": 63,
+      "exp": 2171,
+      "stamina": 143,
+      "bonus": 60,
+      "avatarLimit": 63
+    },
+    {
+      "level": 64,
+      "exp": 2219,
+      "stamina": 144,
+      "bonus": 60,
+      "avatarLimit": 64
+    },
+    {
+      "level": 65,
+      "exp": 2272,
+      "stamina": 145,
+      "bonus": 60,
+      "avatarLimit": 65
+    },
+    {
+      "level": 66,
+      "exp": 2332,
+      "stamina": 146,
+      "bonus": 60,
+      "avatarLimit": 66
+    },
+    {
+      "level": 67,
+      "exp": 2401,
+      "stamina": 147,
+      "bonus": 60,
+      "avatarLimit": 67
+    },
+    {
+      "level": 68,
+      "exp": 2481,
+      "stamina": 148,
+      "bonus": 60,
+      "avatarLimit": 68
+    },
+    {
+      "level": 69,
+      "exp": 2575,
+      "stamina": 149,
+      "bonus": 60,
+      "avatarLimit": 69
+    },
+    {
+      "level": 70,
+      "exp": 2687,
+      "stamina": 150,
+      "bonus": 60,
+      "avatarLimit": 70
+    },
+    {
+      "level": 71,
+      "exp": 2821,
+      "stamina": 151,
+      "bonus": 60,
+      "avatarLimit": 71
+    },
+    {
+      "level": 72,
+      "exp": 2983,
+      "stamina": 152,
+      "bonus": 60,
+      "avatarLimit": 72
+    },
+    {
+      "level": 73,
+      "exp": 3180,
+      "stamina": 153,
+      "bonus": 60,
+      "avatarLimit": 73
+    },
+    {
+      "level": 74,
+      "exp": 3421,
+      "stamina": 154,
+      "bonus": 60,
+      "avatarLimit": 74
+    },
+    {
+      "level": 75,
+      "exp": 3717,
+      "stamina": 155,
+      "bonus": 60,
+      "avatarLimit": 75
+    },
+    {
+      "level": 76,
+      "exp": 4082,
+      "stamina": 156,
+      "bonus": 60,
+      "avatarLimit": 76
+    },
+    {
+      "level": 77,
+      "exp": 4533,
+      "stamina": 157,
+      "bonus": 60,
+      "avatarLimit": 77
+    },
+    {
+      "level": 78,
+      "exp": 5092,
+      "stamina": 158,
+      "bonus": 60,
+      "avatarLimit": 78
+    },
+    {
+      "level": 79,
+      "exp": 5786,
+      "stamina": 159,
+      "bonus": 60,
+      "avatarLimit": 79
+    },
+    {
+      "level": 80,
+      "exp": 6649,
+      "stamina": 160,
+      "bonus": 60,
+      "avatarLimit": 80
+    },
+    {
+      "level": 81,
+      "exp": 20050,
+      "stamina": 161,
+      "bonus": 60,
+      "avatarLimit": 80
+    },
+    {
+      "level": 82,
+      "exp": 22100,
+      "stamina": 162,
+      "bonus": 60,
+      "avatarLimit": 80
+    },
+    {
+      "level": 83,
+      "exp": 24150,
+      "stamina": 163,
+      "bonus": 60,
+      "avatarLimit": 80
+    },
+    {
+      "level": 84,
+      "exp": 26200,
+      "stamina": 164,
+      "bonus": 60,
+      "avatarLimit": 80
+    },
+    {
+      "level": 85,
+      "exp": 28290,
+      "stamina": 165,
+      "bonus": 60,
+      "avatarLimit": 80
+    },
+    {
+      "level": 86,
+      "exp": 30550,
+      "stamina": 166,
+      "bonus": 60,
+      "avatarLimit": 80
+    },
+    {
+      "level": 87,
+      "exp": 32990,
+      "stamina": 167,
+      "bonus": 60,
+      "avatarLimit": 80
+    },
+    {
+      "level": 88,
+      "exp": 1000,
+      "stamina": 168,
+      "bonus": 60,
+      "avatarLimit": 80
+    }
+  ],
+  "avatarLevels": [
+    {
+      "level": 1,
+      "exp": 15
+    },
+    {
+      "level": 2,
+      "exp": 25
+    },
+    {
+      "level": 3,
+      "exp": 35
+    },
+    {
+      "level": 4,
+      "exp": 45
+    },
+    {
+      "level": 5,
+      "exp": 55
+    },
+    {
+      "level": 6,
+      "exp": 65
+    },
+    {
+      "level": 7,
+      "exp": 75
+    },
+    {
+      "level": 8,
+      "exp": 85
+    },
+    {
+      "level": 9,
+      "exp": 100
+    },
+    {
+      "level": 10,
+      "exp": 115
+    },
+    {
+      "level": 11,
+      "exp": 130
+    },
+    {
+      "level": 12,
+      "exp": 145
+    },
+    {
+      "level": 13,
+      "exp": 160
+    },
+    {
+      "level": 14,
+      "exp": 250
+    },
+    {
+      "level": 15,
+      "exp": 340
+    },
+    {
+      "level": 16,
+      "exp": 430
+    },
+    {
+      "level": 17,
+      "exp": 520
+    },
+    {
+      "level": 18,
+      "exp": 610
+    },
+    {
+      "level": 19,
+      "exp": 730
+    },
+    {
+      "level": 20,
+      "exp": 850
+    },
+    {
+      "level": 21,
+      "exp": 970
+    },
+    {
+      "level": 22,
+      "exp": 1090
+    },
+    {
+      "level": 23,
+      "exp": 1210
+    },
+    {
+      "level": 24,
+      "exp": 1360
+    },
+    {
+      "level": 25,
+      "exp": 1510
+    },
+    {
+      "level": 26,
+      "exp": 1660
+    },
+    {
+      "level": 27,
+      "exp": 1810
+    },
+    {
+      "level": 28,
+      "exp": 1960
+    },
+    {
+      "level": 29,
+      "exp": 2160
+    },
+    {
+      "level": 30,
+      "exp": 2360
+    },
+    {
+      "level": 31,
+      "exp": 2560
+    },
+    {
+      "level": 32,
+      "exp": 2760
+    },
+    {
+      "level": 33,
+      "exp": 2960
+    },
+    {
+      "level": 34,
+      "exp": 3260
+    },
+    {
+      "level": 35,
+      "exp": 3560
+    },
+    {
+      "level": 36,
+      "exp": 3860
+    },
+    {
+      "level": 37,
+      "exp": 4160
+    },
+    {
+      "level": 38,
+      "exp": 4460
+    },
+    {
+      "level": 39,
+      "exp": 4840
+    },
+    {
+      "level": 40,
+      "exp": 5220
+    },
+    {
+      "level": 41,
+      "exp": 5600
+    },
+    {
+      "level": 42,
+      "exp": 5980
+    },
+    {
+      "level": 43,
+      "exp": 6360
+    },
+    {
+      "level": 44,
+      "exp": 6860
+    },
+    {
+      "level": 45,
+      "exp": 7360
+    },
+    {
+      "level": 46,
+      "exp": 7860
+    },
+    {
+      "level": 47,
+      "exp": 8360
+    },
+    {
+      "level": 48,
+      "exp": 8860
+    },
+    {
+      "level": 49,
+      "exp": 9460
+    },
+    {
+      "level": 50,
+      "exp": 10060
+    },
+    {
+      "level": 51,
+      "exp": 10660
+    },
+    {
+      "level": 52,
+      "exp": 11260
+    },
+    {
+      "level": 53,
+      "exp": 11860
+    },
+    {
+      "level": 54,
+      "exp": 12660
+    },
+    {
+      "level": 55,
+      "exp": 13460
+    },
+    {
+      "level": 56,
+      "exp": 14260
+    },
+    {
+      "level": 57,
+      "exp": 15060
+    },
+    {
+      "level": 58,
+      "exp": 15860
+    },
+    {
+      "level": 59,
+      "exp": 16660
+    },
+    {
+      "level": 60,
+      "exp": 17460
+    },
+    {
+      "level": 61,
+      "exp": 18260
+    },
+    {
+      "level": 62,
+      "exp": 19060
+    },
+    {
+      "level": 63,
+      "exp": 19860
+    },
+    {
+      "level": 64,
+      "exp": 20860
+    },
+    {
+      "level": 65,
+      "exp": 21860
+    },
+    {
+      "level": 66,
+      "exp": 22860
+    },
+    {
+      "level": 67,
+      "exp": 23860
+    },
+    {
+      "level": 68,
+      "exp": 24860
+    },
+    {
+      "level": 69,
+      "exp": 26460
+    },
+    {
+      "level": 70,
+      "exp": 28060
+    },
+    {
+      "level": 71,
+      "exp": 29660
+    },
+    {
+      "level": 72,
+      "exp": 31260
+    },
+    {
+      "level": 73,
+      "exp": 32860
+    },
+    {
+      "level": 74,
+      "exp": 34660
+    },
+    {
+      "level": 75,
+      "exp": 36460
+    },
+    {
+      "level": 76,
+      "exp": 38260
+    },
+    {
+      "level": 77,
+      "exp": 40060
+    },
+    {
+      "level": 78,
+      "exp": 41860
+    },
+    {
+      "level": 79,
+      "exp": 43860
+    },
+    {
+      "level": 80,
+      "exp": 45860
+    }
+  ]
+}

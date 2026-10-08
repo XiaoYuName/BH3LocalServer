@@ -143,7 +143,7 @@ public sealed class StartupTests : IDisposable
         Assert.Equal(17u, group.ChapterGroupId); Assert.False(group.IsAll);
         Assert.Equal(42u, ReportClientDataVersionRsp.Parser.ParseFrom(Send(398, new ReportClientDataVersionReq { Version = 42 }).Body).ServerVersion);
         Assert.Equal(GetAuthkeyRsp.Types.Retcode.Fail, GetAuthkeyRsp.Parser.ParseFrom(Send(5010, new GetAuthkeyReq()).Body).Retcode);
-        Assert.Equal(UpdateMissionProgressRsp.Types.Retcode.Fail, UpdateMissionProgressRsp.Parser.ParseFrom(Send(117, new UpdateMissionProgressReq()).Body).Retcode);
+        Assert.Equal(UpdateMissionProgressRsp.Types.Retcode.FinishWayError, UpdateMissionProgressRsp.Parser.ParseFrom(Send(117, new UpdateMissionProgressReq()).Body).Retcode);
     }
 
     [Fact]

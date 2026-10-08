@@ -4,10 +4,10 @@ Windows x64 / .NET 10，面向崩坏 3 PC 国服 9.1.0 的独立游戏服务器�
 [当前状态](docs/STATUS.md)记录实现与验收范围，[文档索引](docs/README.md)提供开发入口。
 
 工程按 Protocol、Game、Persistence、Server 四层维护，支持独立构建、测试、发布和存档。
-1.2.4 已接入 KCP、本地账号票据、登录和大厅基础数据、SQLite schema 2，以及客户端设置持久化；修正六类初始化零 ID 全量查询和已有角色、装备返回。
-真实 9.1 大厅由用户实机验收；当前协议属于兼容候选，`gameplayReady` 保持 `false`。详见 [登录与大厅专项](docs/LOGIN_LOBBY_20261009.md)。
+1.3.0 在已实机通过的大厅基础上，新增第一章普通主线关卡、进入、通关结算、任务/星级领奖与 SQLite schema 3 事务持久化。
+真实 9.1 大厅已由用户验收；副本画面待用户验收。当前协议属于兼容候选，`gameplayReady` 保持 `false`。详见 [登录与大厅专项](docs/LOGIN_LOBBY_20261009.md)。
 
-新版独立发布于 `dist/win-x64-1.2.4/`，关闭旧版后打开新版 `Launcher/BH3.Launcher.exe`。
+新版独立发布于 `dist/win-x64-1.3.0/`，关闭旧版后打开新版 `Launcher/BH3.Launcher.exe`。
 
 日常使用 [启动登录器](start-game.bat)，点击“启动服务”即可自动托管同包服务端。完整包说明见 [一体发布](docs/BUNDLE_RELEASE_20261009.md)。
 
@@ -79,4 +79,4 @@ dist\win-x64\Server\BH3.Server.exe --check
 
 工程分层及文档组织参考 115CN，协议、数据库和玩法没有照搬 DNF 字段。参考映射见 [参考工程指南](docs/REFERENCE_GUIDE.md)。
 
-最新修复：[登录舱门初始化全量标志](docs/INIT_SELECTORS_20261009.md)。
+最新实现：[第一章出击与结算](docs/CAMPAIGN_20261009.md)。

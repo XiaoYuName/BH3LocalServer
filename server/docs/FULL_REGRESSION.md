@@ -45,3 +45,9 @@ Python 3 只用于最后的发布进程探针；正式服务和登录器不依�
 ## 一体发布回归
 
 运行 `python tools/verify_bundle.py --archive dist/BH3-Local-1.1.0-win-x64.zip --report evidence/bundle/relocated-package.json`，在异地解压目录执行登录器 9 项检查和 5 项服务端托管检查。默认使用临时数据与随机端口。
+
+## 第一章副本回归 · 1.3.0
+
+`tools/verify_lobby.py` 增加 `--observe-campaign`，用独立构造的 protobuf 字节验证两种 KCP 帧、出击、结算、任务领奖、退出及实际服务进程重启。
+该参数用于对照观察，`passed` 仍表示原有基础检查；交付必须额外断言 `campaign_contracts` 的 40 项以及其余专项全部通过。旧版对照的 false 观察结果保留，不能称为副本通过。
+完整命令见 `evidence/lobby/VERIFICATION.txt`；本版不运行真实游戏。

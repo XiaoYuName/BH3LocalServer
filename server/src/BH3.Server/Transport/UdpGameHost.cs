@@ -81,6 +81,8 @@ public sealed class UdpGameHost(SessionRegistry sessions, GameDispatcher? dispat
                     var observation = new { conversation = current.Conversation, command = packet.CommandId, bodyBytes = packet.Body.Length, status = result.Status.ToString(), replies = result.Replies.Select(r => r.CommandId).ToArray(), replyBodyBytes = result.Replies.Select(r => r.Body.Length).ToArray(), state = current.State.ToString() };
                     recentCommands.Enqueue(observation); if (recentCommands.Count > 100) recentCommands.Dequeue();
                     log?.Invoke("game.command", observation);
+                    if (CampaignDiagnostics.Describe(packet, result) is { } gameplay)
+                        log?.Invoke("game.campaign", new { conversation = current.Conversation, uid = current.PlayerId, gameplay });
                     foreach (var reply in result.Replies) peer.Channel.Send(GamePacketCodec.Encode(reply));
                     if (result.Status == DispatchStatus.Unsupported) unsupported++;
                 }
