@@ -1,0 +1,61 @@
+{
+  "reference": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture",
+  "files": [
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Directory.Build.props",
+      "sha256": "ea94f465ca9cadee234d3324969690218a6ac546ef876e55be9fc612ba7c3d91"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\global.json",
+      "sha256": "eae932e35f8afc5beb2f8b7b2b0bc756d698705bb569926d8d74a9fa54b6cd5c"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\publish.ps1",
+      "sha256": "dbebeac607e6f7f4054abbadb868fe41c9087b9be33d6f870eb5d6fd96493922"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.Core\\Capture.Core.csproj",
+      "sha256": "e6fcb8e1e93a724d47a829cffd19d47840a5eb088e9ace43f3a34bbaf1524b07"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.Core\\CaptureController.cs",
+      "sha256": "7a74b0e041fec95fdc85c91d2b416897eb3e359e6f5eca94527ea50be6ca9e4e"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.Core\\CaptureRecovery.cs",
+      "sha256": "a4c01c87331753d672c776e4fa98224c835a695f76c74ff5b1674fdd06d075de"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.Core\\Session.cs",
+      "sha256": "b60fd321c6a86564c6077830ddf735afa2517fa7efc721aee924f67b3fc3ac1f"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.Core\\WindowsCommandText.cs",
+      "sha256": "5be5c6cbeecccd44675e724e7e6172ed4edcc41742c7594da761c0308d6a312c"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.App\\Capture.App.csproj",
+      "sha256": "8eab2c5beb7699d63cb276824a4c840db27631db8788f095c24ba8a18e5d82dc"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.App\\Program.cs",
+      "sha256": "a0e392a9a3ca6e3d5b05ed50749b39bd8f94fd7b632013c08d9aa91533c6c996"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.App\\MainForm.cs",
+      "sha256": "1cab45100ae28ab3e7f24bee8174065204acb3d53a53f4a20fcfabbb692950a9"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.App\\CaseNameInput.cs",
+      "sha256": "960b2f2057ce6ac9f3f960b15f357f0dd00fa4305dcf06732cb30ab722eee369"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.App\\app.manifest",
+      "sha256": "ea2d061554c545fca019e7515aeb2439deace356a9205658aaef0cb6819e8560"
+    },
+    {
+      "path": "D:\\AssetsStudio\\DNF_115\\Tools\\PacketCapture\\Capture.Check\\Capture.Check.csproj",
+      "sha256": "e6fb0a6a3706296cded92f2be3150fa0678c56bbb6ccbba5154c2cfa37fa071f"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-if exist "dist\win-x64-1.3.0\Launcher\BH3.Launcher.exe" (
-  start "" "%~dp0dist\win-x64-1.3.0\Launcher\BH3.Launcher.exe"
+if exist "dist\win-x64-1.6.3\Launcher\BH3.Launcher.exe" (
+  start "" "%~dp0dist\win-x64-1.6.3\Launcher\BH3.Launcher.exe"
   exit /b 0
 )
 if not exist "dist\win-x64\Launcher\BH3.Launcher.exe" (

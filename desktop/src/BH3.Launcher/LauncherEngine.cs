@@ -17,6 +17,7 @@ internal sealed class LauncherEngine : IDisposable
     private readonly string? serverConfigOverride;
     private readonly SemaphoreSlim gate = new(1);
     internal bool Running => stack?.Running == true;
+    internal Uri? GmAddress { get; private set; }
     internal int? ServerProcessId => server is { HasExited: false } child ? child.Id : null;
     internal bool GameRunning => game is { HasExited: false };
     internal bool IsAdmin => new WindowsPrincipal(WindowsIdentity.GetCurrent()).IsInRole(WindowsBuiltInRole.Administrator);
@@ -114,7 +115,7 @@ internal sealed class LauncherEngine : IDisposable
                     if (state.TryGetProperty("processId", out var pid) && pid.GetInt32() == child.Id &&
                         state.GetProperty("service").GetString() == "BH3.Server" && state.GetProperty("hostReady").GetBoolean() &&
                         state.GetProperty("gamePort").GetInt32() == Config.GamePort)
-                    { Log.Write("服务", $"随包服务端已就绪 · PID {child.Id} · UDP {Config.GamePort}。"); return; }
+                    { GmAddress = new UriBuilder("http",bind,port,"/gm/index.html").Uri; Log.Write("服务", $"随包服务端已就绪 · PID {child.Id} · UDP {Config.GamePort}。"); return; }
                 }
             }
             catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or JsonException or KeyNotFoundException) { }
@@ -185,7 +186,7 @@ internal sealed class LauncherEngine : IDisposable
     {
         using var zip = ZipFile.Open(path, ZipArchiveMode.Create);
         using (var writer = new StreamWriter(zip.CreateEntry("运行记录.txt").Open())) writer.Write(string.Join(Environment.NewLine, Log.Snapshot()));
-        using (var writer = new StreamWriter(zip.CreateEntry("状态.json").Open())) writer.Write(JsonSerializer.Serialize(new { desktop = true, version = "1.3.0", client = File.Exists(Config.GameExe), Running, GameRunning, system_proxy_owned = Proxy.Active, Config.HttpPort, Config.ProxyPort, Config.GamePort, managed_game_server = Config.ResolveServerExe().Length > 0, key_version = "9.1.0", gameplay = "not-verified" }, LauncherConfig.Json));
+        using (var writer = new StreamWriter(zip.CreateEntry("状态.json").Open())) writer.Write(JsonSerializer.Serialize(new { desktop = true, version = typeof(LauncherEngine).Assembly.GetName().Version?.ToString(3), client = File.Exists(Config.GameExe), Running, GameRunning, system_proxy_owned = Proxy.Active, Config.HttpPort, Config.ProxyPort, Config.GamePort, managed_game_server = Config.ResolveServerExe().Length > 0, key_version = "9.1.0", gameplay = "not-verified" }, LauncherConfig.Json));
         // Certificate private keys, proxy snapshots and SDK request bodies are deliberately excluded.
     }
     public void Dispose()

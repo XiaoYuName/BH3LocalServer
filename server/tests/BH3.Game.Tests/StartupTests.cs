@@ -36,6 +36,65 @@ public sealed class StartupTests : IDisposable
     public sealed record StartupRequest(ushort Request, string RequestType, ushort Response, string ResponseType);
 
     [Fact]
+    public void PostBattleAuxiliaryRequestsReplyWithoutGrantingStageProgress()
+    {
+        var before = JsonSerializer.Serialize(store.Read(10001));
+        // Nested telemetry fields remain valid unknown protobuf fields in this projection.
+        var telemetry = StageInnerDataReportReq.Parser.ParseFrom(Convert.FromHexString("0A02086528F54E"));
+        Assert.Equal(StageInnerDataReportRsp.Types.Retcode.Succ,
+            StageInnerDataReportRsp.Parser.ParseFrom(Send(131, telemetry).Body).Retcode);
+        Assert.Equal(AddGoodfeelRsp.Types.Retcode.Fail,
+            AddGoodfeelRsp.Parser.ParseFrom(Send(154, new AddGoodfeelReq { AvatarId = 101, AddGoodfeel = 10, AddGoodfeelType = 1 }).Body).Retcode);
+        Assert.Equal(AddGoodfeelRsp.Types.Retcode.AvatarNotExist,
+            AddGoodfeelRsp.Parser.ParseFrom(Send(154, new AddGoodfeelReq { AvatarId = 999999 }).Body).Retcode);
+        Assert.Equal(PjmsGetCurWorldRsp.Types.Retcode.Succ,
+            PjmsGetCurWorldRsp.Parser.ParseFrom(Send(7702, new PjmsGetCurWorldReq()).Body).Retcode);
+        Assert.Equal(before, JsonSerializer.Serialize(store.Read(10001)));
+        Assert.All(GetStageDataRsp.Parser.ParseFrom(Send(41, new GetStageDataReq()).Body).StageList, stage => Assert.False(stage.IsDone));
+        foreach (ushort id in new ushort[] { 131, 154, 7702 })
+            Assert.Equal(DispatchStatus.InvalidState, dispatcher.Dispatch(new GameSession(2, "untrusted", 1), Packet(id, new PjmsGetCurWorldReq())).Status);
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CurrentWorldQueryCompletesLegacyReturnWithoutChangingProgress(bool afterSettlement)
+    {
+        if (afterSettlement)
+        {
+            var campaign = new BH3.Game.Campaign.CampaignService(store, TimeProvider.System);
+            Assert.Equal(StageBeginRsp.Types.Retcode.Succ,
+                campaign.Begin(10001, new StageBeginReq { StageId = 10101, AvatarIdList = { 101 } }).Retcode);
+            Assert.Equal(StageEndRsp.Types.Retcode.Succ, campaign.End(10001, new StageEndReq {
+                Body = ByteString.CopyFrom(Convert.FromHexString("08F54E30003001300250D8AD03")), Sign = "current-world-test" }).Retcode);
+        }
+        var wallet = JsonSerializer.Serialize(store.Read(10001));
+        var stages = Send(41, new GetStageDataReq()).Body;
+        var main = PjmsGetMainDataRsp.Parser.ParseFrom(Send(7706, new PjmsGetMainDataReq()).Body);
+        var response = Send(7702, new PjmsGetCurWorldReq());
+        Assert.Equal(7703, response.CommandId);
+        Assert.Equal(10001u, response.ClaimedUserId);
+        var current = PjmsGetCurWorldRsp.Parser.ParseFrom(response.Body);
+        // 9.1 PrepareReEnterCurrentWorldTask stops on FAIL. Its success path passes
+        // world to WorldLoadInfo; the legacy account has no active PJMS world (ID 0).
+        Assert.True(current.HasRetcode);
+        Assert.Equal(PjmsGetCurWorldRsp.Types.Retcode.Succ, current.Retcode);
+        Assert.NotNull(current.World);
+        Assert.True(current.World.HasWorldId);
+        Assert.Equal(0u, current.World.WorldId);
+        Assert.Empty(current.World.EntityList); Assert.Empty(current.World.ActiveGroupList);
+        Assert.Empty(current.World.KillMonsterGuidList);
+        Assert.Equal(main.World, current.World);
+        Assert.Equal(response.Body, Send(7702, new PjmsGetCurWorldReq()).Body);
+        Assert.Equal(stages, Send(41, new GetStageDataReq()).Body);
+        Assert.Equal(wallet, JsonSerializer.Serialize(store.Read(10001)));
+        var reopened = new LobbyStore(factory);
+        var reopenedDispatcher = new GameDispatcher(new LobbyHandlers(reopened, new SqlitePlayerStore(factory), new byte[32]).Create());
+        Assert.Equal(response.Body, Assert.Single(reopenedDispatcher.Dispatch(session, Packet(7702, new PjmsGetCurWorldReq())).Replies).Body);
+        Assert.Equal(wallet, JsonSerializer.Serialize(reopened.Read(10001)));
+    }
+
+    [Fact]
     public void ObservedStartupRequestsGetTheirDeclaredResponsesOnlyAfterAuthentication()
     {
         // Fixture derives from the user command trace and independent reference command enum.
@@ -55,6 +114,41 @@ public sealed class StartupTests : IDisposable
             if (retcode is not null) Assert.True(retcode.Accessor.HasValue(decoded), item.ResponseType);
         }
         Assert.Equal(DispatchStatus.Unsupported, dispatcher.Dispatch(session, Packet(65000, new GetMainDataReq())).Status);
+    }
+
+    [Fact]
+    public void SortieResolvesScheduledMainStoryToChapterAndStageWithoutGrantingProgress()
+    {
+        using var fixture = JsonDocument.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "Fixtures", "world-map-main-story.json")));
+        var route = fixture.RootElement;
+        var original = store.Read(10001);
+        var packet = Send(1012, new GetWorldMapDataReq());
+        var map = Assert.Single(GetWorldMapDataRsp.Parser.ParseFrom(packet.Body).WorldMapList, x => x.WorldMapId == 2);
+        // Independent reference route: WorldMapId is a table key, not UI EntryID=1002.
+        Assert.Equal(route.GetProperty("worldMapId").GetUInt32(), map.WorldMapId);
+        Assert.Equal(route.GetProperty("scheduleId").GetUInt32(), map.Id);
+        Assert.True(map.AdvanceTime <= map.BeginTime);
+        long now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        Assert.True(map.BeginTime <= now && now < map.EndTime && map.EndTime <= int.MaxValue);
+        var recommendation = GetWorldMapRecommendRsp.Parser.ParseFrom(Send(1713, new GetWorldMapRecommendReq()).Body);
+        Assert.Contains(recommendation.ActivityRecommendList,x=>x.WorldMapId==2383);
+        Assert.DoesNotContain(recommendation.ActivityRecommendList,x=>x.WorldMapId==2386);
+        var mainRecommendation=Assert.Single(recommendation.PermanentRecommendList,x=>x.WorldMapId==map.WorldMapId);
+        Assert.Empty(mainRecommendation.ActiveConditionList);
+        var scheduled=GetWorldMapDataRsp.Parser.ParseFrom(packet.Body).WorldMapList.Select(x=>x.WorldMapId).ToHashSet();
+        Assert.All(recommendation.ActivityRecommendList.Concat(recommendation.PermanentRecommendList),x=>Assert.Contains(x.WorldMapId,scheduled));
+        var chapter = Assert.Single(GetStageChapterRsp.Parser.ParseFrom(Send(965, new GetStageChapterReq()).Body).ChapterList, x => x.ChapterId == 1);
+        Assert.Equal(route.GetProperty("chapterId").GetUInt32(), chapter.ChapterId);
+        var groups = ChapterGroupGetDataRsp.Parser.ParseFrom(Send(1660, new ChapterGroupGetDataReq()).Body);
+        Assert.True(groups.IsAll);
+        var site = Assert.Single(Assert.Single(groups.ChapterGroupList, x => x.Id == 1).SiteList, x => x.SiteId == 1);
+        Assert.Equal(chapter.ChapterId, site.ChapterId); Assert.Equal(1u, site.SiteId);
+        Assert.Equal(ChapterGroupSiteStatus.Unlocked, site.Status);
+        var stage = Assert.Single(GetStageDataRsp.Parser.ParseFrom(Send(41, new GetStageDataReq
+            { StageIdList = { route.GetProperty("firstStageId").GetUInt32() } }).Body).StageList);
+        Assert.False(stage.IsDone); Assert.Equal(0u, stage.Progress); Assert.Empty(stage.ChallengeIndexList);
+        Assert.Equal(packet.Body, Send(1012, new GetWorldMapDataReq()).Body);
+        Assert.Equal(JsonSerializer.Serialize(original), JsonSerializer.Serialize(store.Read(10001)));
     }
 
     [Fact]

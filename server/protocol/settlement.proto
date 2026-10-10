@@ -1,0 +1,30 @@
+syntax = "proto2";
+package proto;
+option csharp_namespace = "BH3.Protocol.Messages";
+import "lobby.proto";
+
+// Minimal projections for post-battle requests observed in the 1.3.5 user trace.
+// IDs/fields: reference command catalog and SeaRelWin8.4.0 descriptors.
+// Nested combat telemetry is retained as protobuf unknown fields, not treated as rewards.
+message StageInnerDataReportReq {
+  optional uint32 stage_id = 5;
+}
+message StageInnerDataReportRsp {
+  enum Retcode { SUCC = 0; FAIL = 1; }
+  required Retcode retcode = 1;
+}
+message AddGoodfeelReq {
+  optional uint32 avatar_id = 1;
+  optional int32 add_goodfeel = 2;
+  optional uint32 add_goodfeel_type = 3;
+}
+message AddGoodfeelRsp {
+  enum Retcode { SUCC = 0; FAIL = 1; AVATAR_NOT_EXIST = 2; }
+  required Retcode retcode = 1;
+}
+message PjmsGetCurWorldReq {}
+message PjmsGetCurWorldRsp {
+  enum Retcode { SUCC = 0; FAIL = 1; }
+  required Retcode retcode = 1;
+  optional PjmsWorld world = 2;
+}

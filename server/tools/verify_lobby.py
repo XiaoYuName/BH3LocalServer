@@ -25,11 +25,51 @@ parser.add_argument('--observe-client-contracts', action='store_true', help='Rec
 parser.add_argument('--observe-overall', action='store_true', help='Compare 7842 full/selected queries and 7843 snapshot flags on both KCP framings.')
 parser.add_argument('--observe-init-selectors', action='store_true', help='Observe client 9.1 zero-ID initialization selectors and selected queries.')
 parser.add_argument('--observe-campaign', action='store_true', help='Exercise chapter-one begin/end/rewards/restart using independent wire payloads.')
+parser.add_argument('--observe-world-map', action='store_true', help='Observe main-story schedule, recommendation and chapter route prerequisites.')
+parser.add_argument('--observe-chapter-unlock', action='store_true', help='Replay client chapter-group unlock and selected/full snapshot contracts.')
+parser.add_argument('--observe-team-prepare', action='store_true', help='Replay client prepare-page member lookup, team updates and restart.')
+parser.add_argument('--observe-settlement', action='store_true', help='Replay omitted-WIN, invalid enum errors, next-stage progression and post-battle callbacks.')
+parser.add_argument('--observe-pjms-current', action='store_true', help='Check post-settlement current-world response, startup consistency and absence of progression side effects.')
+parser.add_argument('--observe-act-reward', action='store_true', help='Replay single/batch challenge claims and 457-before-459 cache updates, retry and restart.')
+parser.add_argument('--account-copy', help='Import this reviewed account copy into a fresh isolated test UID and check large snapshots on both KCP framings.')
+parser.add_argument('--observe-gm', action='store_true')
+parser.add_argument('--observe-shop', action='store_true')
+parser.add_argument('--observe-mall', action='store_true')
+parser.add_argument('--observe-gameplay', action='store_true')
+parser.add_argument('--observe-companions', action='store_true')
+parser.add_argument('--observe-economy', action='store_true')
+parser.add_argument('--observe-systems', action='store_true')
 args = parser.parse_args()
 work = Path(tempfile.mkdtemp(prefix='bh3-lobby-'))
 events, checks, client_contracts, overall_contracts = [], [], [], []
 init_selector_contracts = []
+world_map_contracts = []
+chapter_unlock_contracts = []
+team_prepare_contracts = []
+from team_prepare_contract import observe as observe_team_prepare
+from settlement_contract import observe as observe_settlement
+from pjms_current_contract import observe as observe_pjms_current
+pjms_current_contracts = []
+from act_reward_contract import observe as observe_act_reward
+act_reward_contracts, act_reward_contexts = [], {}
+settlement_contracts, settlement_contexts = [], {}
+from chapter_unlock_contract import observe as observe_chapter_unlock
+from world_map_contract import observe as observe_world_map
 campaign_contracts, campaign_contexts = [], {}
+from gm_contract import observe as observe_gm
+gm_contracts, gm_contexts = [], {}
+from shop_contract import observe as observe_shop
+shop_contracts, shop_contexts = [], {}
+from mall_contract import observe as observe_mall
+mall_contracts, mall_contexts = [], {}
+from gameplay_contract import observe as observe_gameplay
+gameplay_contracts, gameplay_contexts = [], {}
+from companion_contract import observe as observe_companions
+companion_contracts, companion_contexts = [], {}
+from economy_contract import observe as observe_economy
+economy_contracts, economy_contexts = [], {}
+from systems_contract import observe as observe_systems
+systems_contracts, systems_contexts = [], {}
 retired_sockets = []
 completed = False
 key = os.urandom(32)
@@ -189,6 +229,7 @@ class Peer:
         deadline = time.monotonic() + timeout
         primary, snapshots = None, set()
         self.last_snapshots = {}
+        self.last_response_ids = []
         while time.monotonic() < deadline:
             native.ikcp_update(self.ptr, int(time.monotonic()*1000) & 0xffffffff)
             try:
@@ -206,12 +247,32 @@ class Peer:
                 response_id, metadata_size, size = struct.unpack_from('>HHI', message, 26)
                 raw = message[34+metadata_size:34+metadata_size+size]
                 decoded = fields(raw)
+                self.last_response_ids.append(response_id)
+                if command in (531,5206) and response_id in (511,533,5203) and primary is None:
+                    self.last_snapshots[response_id] = decoded
+                    length = native.ikcp_recv(self.ptr, buffer, len(buffer))
+                    continue
+                if command == 458 and response_id == 457 and primary is None:
+                    self.last_snapshots[457] = decoded
+                    length = native.ikcp_recv(self.ptr, buffer, len(buffer))
+                    continue
+                if primary is None and response_id != command + 1 and response_id in (3751,969,507,1194,1198,6718,450,591):
+                    self.last_snapshots[response_id] = decoded
+                    length = native.ikcp_recv(self.ptr, buffer, len(buffer))
+                    continue
+                if (args.observe_gm or args.observe_shop or args.observe_mall or args.observe_gameplay or args.observe_companions or args.observe_economy or args.observe_systems) and primary is None and response_id != command + 1 and response_id in (11,25,27,113,2102,2103,4703,3808,6701,6703,6722,6707):
+                    if response_id in (6722,6707):self.last_snapshots[response_id]=decoded
+                    length = native.ikcp_recv(self.ptr, buffer, len(buffer))
+                    continue
                 if primary is None:
                     self.last_response_body = raw
                     primary = (response_id, decoded, struct.unpack_from('>I', message, 12)[0])
-                    if command not in (43, 45, 114, 458) or decoded.get(1) != [0]:
+                    if command not in (6719,251,288,753,755,757,759,761,763,765,1195,3752,3754,3756,3758,29, 43, 45, 114, 458, 3802, 4700, 4704, 6714, 6731, 1494, 207, 6723, 6725, 6733, 531, 5206, 2105, 2107, 2121, 2123, 1742) or decoded.get(1) != [0]:
                         return primary
-                    snapshots = {11, 42, 113, 25, 27}
+                    snapshots = {11, 6707, 6722, 6742} if command in (6731,1494,207) else {11, 42, 113, 25, 27}
+                    if command == 531: snapshots = {11,27}
+                    if command == 5206: snapshots = {113}
+                    if command in (6723,6725,6733): snapshots.update({6722,6707}-self.last_snapshots.keys())
                 elif response_id in snapshots:
                     self.last_snapshots[response_id] = decoded
                     snapshots.remove(response_id)
@@ -262,6 +323,27 @@ def observe_init_selectors(peer, framing, uid):
                 is_all=data.get(flag_field), item_count=count, passed=passed))
 
 
+def observe_settlement_session(wide, uid, restart=False):
+    peer = Peer(wide)
+    try:
+        assert peer.login(uid)
+        label = 'restart' if restart else ('64-bit' if wide else '32-bit')
+        settlement_contracts.extend(observe_settlement(peer, label, uid, fields, integer, blob, settlement_contexts, restart))
+    finally:
+        peer.close()
+
+
+def observe_act_reward_session(wide, uid, restart=False):
+    peer = Peer(wide)
+    try:
+        assert peer.login(uid)
+        label = 'restart' if restart else ('64-bit single' if wide else '32-bit batch')
+        act_reward_contracts.extend(observe_act_reward(peer, label, uid, fields, integer, blob,
+                                                      act_reward_contexts, batch=not wide, restart=restart))
+    finally:
+        peer.close()
+
+
 def observe_campaign(peer, framing, uid, restart=False):
     def observe(name, passed, request=b''):
         campaign_contracts.append(dict(name=f'{framing}: {name}', passed=bool(passed), request_hex=request.hex(),
@@ -275,7 +357,7 @@ def observe_campaign(peer, framing, uid, restart=False):
                 and fields(peer.request(41, integer(1, 10101))[1][2][0]).get(2) == [1])
         return
     stage_list = peer.request(41, integer(1, 0))
-    observe('chapter-one stage catalog', stage_list is not None and len(stage_list[1].get(2, [])) == 15)
+    observe('chapter-one stage catalog', stage_list is not None and {fields(s)[1][0] for s in stage_list[1].get(2, [])}.issuperset(range(10101,10116)))
     missions = peer.request(112)
     observe('mainline missions available', missions is not None and len(missions[1].get(2, [])) > 0)
     for cmd in (121, 476, 502, 813, 6706, 4167, 3460):
@@ -353,8 +435,20 @@ try:
                     reply = peer.request(7842, body)
                     overall_contracts.append(dict(name=name, request_hex=body.hex(), response=reply,
                         passed=reply is not None and reply[0] == 7843 and reply[2] == 10001 and reply[1] == {1: [0], 3: [flag]}))
+            if args.observe_world_map:
+                world_map_contracts.extend(observe_world_map(peer, '32-bit', 10001, fields, integer))
+            if args.observe_chapter_unlock:
+                chapter_unlock_contracts.extend(observe_chapter_unlock(peer, '32-bit', 10001, fields, integer))
             if args.observe_campaign:
                 observe_campaign(peer, '32-bit', 10001)
+            if args.observe_team_prepare:
+                team_prepare_contracts.extend(observe_team_prepare(peer, '32-bit', 10001, fields, integer, blob))
+            if args.observe_settlement:
+                observe_settlement_session(False, 11001)
+            if args.observe_pjms_current:
+                pjms_current_contracts.extend(observe_pjms_current(peer, '32-bit after settlement', 10001, fields))
+            if args.observe_act_reward:
+                observe_act_reward_session(False, 12001)
     finally:
         peer.close()
     if not args.baseline:
@@ -371,8 +465,20 @@ try:
                     passed=reply is not None and reply[0] == 7843 and reply[2] == 10002 and reply[1] == {1: [0], 3: [1]}))
             other = peer.request(1586, integer(1, 1) + integer(2, 42))
             check('Other account cannot read client settings', 4 not in other[1])
+            if args.observe_world_map:
+                world_map_contracts.extend(observe_world_map(peer, '64-bit', 10002, fields, integer))
+            if args.observe_chapter_unlock:
+                chapter_unlock_contracts.extend(observe_chapter_unlock(peer, '64-bit', 10002, fields, integer))
             if args.observe_campaign:
                 observe_campaign(peer, '64-bit', 10002)
+            if args.observe_team_prepare:
+                team_prepare_contracts.extend(observe_team_prepare(peer, '64-bit', 10002, fields, integer, blob))
+            if args.observe_settlement:
+                observe_settlement_session(True, 11002)
+            if args.observe_pjms_current:
+                pjms_current_contracts.extend(observe_pjms_current(peer, '64-bit after settlement', 10002, fields))
+            if args.observe_act_reward:
+                observe_act_reward_session(True, 12002)
         finally:
             peer.close()
         stop(proc); proc = start(); peer = Peer()
@@ -382,10 +488,165 @@ try:
             check('Client settings survive restart', fields(loaded[1][4][0])[3] == [b'persist-after-restart'])
             if args.startup_fixture:
                 check('Completed guide survives restart', 999001 in peer.request(127)[1][2])
+            if args.observe_world_map:
+                world_map_contracts.extend(observe_world_map(peer, 'restart', 10001, fields, integer))
+            if args.observe_chapter_unlock:
+                chapter_unlock_contracts.extend(observe_chapter_unlock(peer, 'restart', 10001, fields, integer))
             if args.observe_campaign and 10001 in campaign_contexts:
                 observe_campaign(peer, 'restart', 10001, restart=True)
+            if args.observe_team_prepare:
+                team_prepare_contracts.extend(observe_team_prepare(peer, 'restart', 10001, fields, integer, blob))
+            if args.observe_settlement:
+                observe_settlement_session(False, 11001, restart=True)
+            if args.observe_pjms_current:
+                pjms_current_contracts.extend(observe_pjms_current(peer, 'restart', 10001, fields))
+            if args.observe_act_reward:
+                observe_act_reward_session(False, 12001, restart=True)
         finally:
             peer.close()
+    if args.account_copy and not args.baseline:
+        peer = Peer()
+        try:
+            check('Import fixture local account initialized', peer.login(13001))
+        finally:
+            peer.close()
+        stop(proc); proc = None
+        command = [str(Path(args.server).resolve()), '--config', str(config), '--import-account-copy', str(Path(args.account_copy).resolve()), '--uid', '13001', '--allow-partial']
+        imported = subprocess.run(command, capture_output=True, encoding='utf-8', errors='replace')
+        events.append(dict(command=command, stdout=imported.stdout, stderr=imported.stderr, exit_status=imported.returncode))
+        check('Published offline importer succeeds', imported.returncode == 0)
+        summary = json.loads(imported.stdout)['result']
+        proc = start()
+        for wide in [False, True]:
+            label = '64-bit imported' if wide else '32-bit imported'
+            peer = Peer(wide)
+            try:
+                check(label + ' login', peer.login(13001))
+                a = peer.request(24, integer(1, 0), timeout=10)
+                eq = peer.request(26, b''.join(integer(i, 0) for i in range(1, 5)), timeout=10)
+                check(label + ' complete fragmented roster', a is not None and a[1].get(3) == [1] and len(a[1].get(2, [])) == summary['avatars'])
+                check(label + ' complete fragmented equipment', eq is not None and eq[1].get(5) == [1] and len(eq[1].get(2, [])) == summary['weapons'] and len(eq[1].get(3, [])) == summary['stigmata'])
+                ids = [fields(raw)[1][0] for raw in a[1][2]]
+                selected = peer.request(24, integer(1, ids[-1]))
+                check(label + ' selected imported avatar', selected is not None and selected[1].get(3) == [0] and len(selected[1].get(2, [])) == 1 and fields(selected[1][2][0])[1] == [ids[-1]])
+                team = ids[:2] + [ids[-1]]
+                begin = peer.request(43, integer(1, 10101) + b''.join(integer(2, i) for i in team), timeout=10)
+                check(label + ' imported three-member stage begin', begin is not None and begin[1].get(1) == [0])
+                end = peer.request(45, blob(1, integer(1, 10101)) + blob(2, label), timeout=10)
+                check(label + ' imported team settles with full roster push', end is not None and end[1].get(1) == [0] and len(peer.last_snapshots.get(25, {}).get(2, [])) == summary['avatars'])
+            finally:
+                peer.close()
+        stop(proc); proc = start(); peer = Peer()
+        try:
+            check('Imported inventory survives host restart', peer.login(13001) and len(peer.request(24, timeout=10)[1][2]) == summary['avatars'])
+        finally:
+            peer.close()
+        peer = Peer()
+        try:
+            check('Imported inventory remains account isolated', peer.login(10002) and len(peer.request(24)[1][2]) == 1)
+        finally:
+            peer.close()
+    if args.observe_gm or args.observe_shop or args.observe_gameplay or args.observe_companions or args.observe_economy or args.observe_systems:
+        def gm_http(uid,body=None):
+            req=urllib.request.Request(f'http://127.0.0.1:{health}/api/gm/player/{uid}', data=json.dumps(body).encode() if body else None,headers={'Content-Type':'application/json','X-BH3-GM':'1'})
+            with opener.open(req,timeout=5) as r:return json.load(r)
+        for wide,uid in ([(False,14001),(True,14002)] if args.observe_gm else []):
+            p=Peer(wide)
+            try:
+                check(f'GM {uid} login',p.login(uid))
+                gm_contracts.extend(observe_gm(p,str(uid),uid,fields,integer,blob,gm_http,gm_contexts))
+            finally:p.close()
+        stop(proc);proc=start()
+        for wide,uid in ([(False,14001),(True,14002)] if args.observe_gm else []):
+            p=Peer(wide)
+            try:
+                check(f'GM {uid} restart login',p.login(uid))
+                gm_contracts.extend(observe_gm(p,str(uid)+' restart',uid,fields,integer,blob,gm_http,gm_contexts,True))
+            finally:p.close()
+    if args.observe_shop:
+        for wide,uid in [(False,15001),(True,15002)]:
+            p=Peer(wide)
+            try:
+                check(f'Shop {uid} login',p.login(uid))
+                shop_contracts.extend(observe_shop(p,str(uid),uid,fields,integer,blob,gm_http,shop_contexts))
+            finally:p.close()
+        stop(proc);proc=start()
+        for wide,uid in [(False,15001),(True,15002)]:
+            p=Peer(wide)
+            try:
+                check(f'Shop {uid} restart login',p.login(uid))
+                shop_contracts.extend(observe_shop(p,str(uid)+' restart',uid,fields,integer,blob,gm_http,shop_contexts,True))
+            finally:p.close()
+    if args.observe_mall:
+        for wide,uid in [(False,16001),(True,16002)]:
+            p=Peer(wide)
+            try:
+                check(f'Mall {uid} login',p.login(uid))
+                mall_contracts.extend(observe_mall(p,str(uid),fields,integer,blob,mall_contexts))
+            finally:p.close()
+        stop(proc);proc=start()
+        for wide,uid in [(False,16001),(True,16002)]:
+            p=Peer(wide)
+            try:
+                check(f'Mall {uid} restart login',p.login(uid))
+                mall_contracts.extend(observe_mall(p,str(uid),fields,integer,blob,mall_contexts,True))
+            finally:p.close()
+    if args.observe_gameplay:
+        for wide,uid in [(False,17001),(True,17002)]:
+            p=Peer(wide)
+            try:
+                check(f'Gameplay {uid} login',p.login(uid))
+                gameplay_contracts.extend(observe_gameplay(p,str(uid),uid,fields,integer,blob,gm_http,gameplay_contexts))
+            finally:p.close()
+        stop(proc);proc=start()
+        for wide,uid in [(False,17001),(True,17002)]:
+            p=Peer(wide)
+            try:
+                check(f'Gameplay {uid} restart login',p.login(uid))
+                gameplay_contracts.extend(observe_gameplay(p,str(uid)+' restart',uid,fields,integer,blob,gm_http,gameplay_contexts,True))
+            finally:p.close()
+    if args.observe_companions:
+        for wide,uid in [(False,18001),(True,18002)]:
+            p=Peer(wide)
+            try:
+                check(f'Companions {uid} login',p.login(uid))
+                companion_contracts.extend(observe_companions(p,str(uid),uid,fields,integer,blob,gm_http,companion_contexts))
+            finally:p.close()
+        stop(proc);proc=start()
+        for wide,uid in [(False,18001),(True,18002)]:
+            p=Peer(wide)
+            try:
+                check(f'Companions {uid} restart login',p.login(uid))
+                companion_contracts.extend(observe_companions(p,str(uid)+' restart',uid,fields,integer,blob,gm_http,companion_contexts,True))
+            finally:p.close()
+    if args.observe_economy:
+        for wide,uid in [(False,19001),(True,19002)]:
+            p=Peer(wide)
+            try:
+                check(f'Economy {uid} login',p.login(uid))
+                economy_contracts.extend(observe_economy(p,str(uid),uid,fields,integer,blob,gm_http,economy_contexts))
+            finally:p.close()
+        stop(proc);proc=start()
+        for wide,uid in [(False,19001),(True,19002)]:
+            p=Peer(wide)
+            try:
+                check(f'Economy {uid} restart login',p.login(uid))
+                economy_contracts.extend(observe_economy(p,str(uid)+' restart',uid,fields,integer,blob,gm_http,economy_contexts,True))
+            finally:p.close()
+    if args.observe_systems:
+        for wide,uid in [(False,20001),(True,20002)]:
+            p=Peer(wide)
+            try:
+                check(f'Systems {uid} login',p.login(uid))
+                systems_contracts.extend(observe_systems(p,str(uid),uid,fields,integer,blob,gm_http,systems_contexts))
+            finally:p.close()
+        stop(proc);proc=start()
+        for wide,uid in [(False,20001),(True,20002)]:
+            p=Peer(wide)
+            try:
+                check(f'Systems {uid} restart login',p.login(uid))
+                systems_contracts.extend(observe_systems(p,str(uid)+' restart',uid,fields,integer,blob,gm_http,systems_contexts,True))
+            finally:p.close()
     completed = True
 finally:
     if proc is not None:
@@ -397,7 +658,22 @@ finally:
         server_sha256=hashlib.sha256(Path(args.server).read_bytes()).hexdigest(),
         native_kcp_sha256=hashlib.sha256(Path(args.native_kcp).read_bytes()).hexdigest(), real_game_client=False,
         client_contracts=client_contracts, overall_contracts=overall_contracts, init_selector_contracts=init_selector_contracts,
-        campaign_contracts=campaign_contracts)
+        campaign_contracts=campaign_contracts, world_map_contracts=world_map_contracts, chapter_unlock_contracts=chapter_unlock_contracts,
+        team_prepare_contracts=team_prepare_contracts, settlement_contracts=settlement_contracts,
+        pjms_current_contracts=pjms_current_contracts, act_reward_contracts=act_reward_contracts, gm_contracts=gm_contracts,shop_contracts=shop_contracts,mall_contracts=mall_contracts,gameplay_contracts=gameplay_contracts,companion_contracts=companion_contracts,economy_contracts=economy_contracts,systems_contracts=systems_contracts)
+    record['passed'] &= all(c['passed'] for k,v in record.items() if k.endswith('contracts') for c in v)
+    for contract in act_reward_contracts:
+        print('ACT_REWARD_CONTRACT', json.dumps(contract), flush=True)
+    for contract in pjms_current_contracts:
+        print('PJMS_CURRENT_CONTRACT', json.dumps(contract), flush=True)
+    for contract in settlement_contracts:
+        print('SETTLEMENT_CONTRACT', json.dumps(contract), flush=True)
+    for contract in team_prepare_contracts:
+        print('TEAM_PREPARE_CONTRACT', json.dumps(contract), flush=True)
+    for contract in chapter_unlock_contracts:
+        print('CHAPTER_UNLOCK_CONTRACT', json.dumps(contract), flush=True)
+    for contract in world_map_contracts:
+        print('WORLD_MAP_CONTRACT', json.dumps(contract), flush=True)
     for contract in campaign_contracts:
         print('CAMPAIGN_CONTRACT', json.dumps(contract), flush=True)
     for contract in init_selector_contracts:

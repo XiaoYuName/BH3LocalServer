@@ -20,6 +20,14 @@
 /desktop/Data/
 /server/data/
 
+# Account captures stay local; source and synthetic fixtures remain versioned.
+**/captures/
+*.etl
+*.pcapng
+*.pcap
+account-copy.json
+account-summary.txt
+
 # One-off root analysis outputs; production tools live under server/tools.
 /tools_*.py
 /blob_*.json

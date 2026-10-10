@@ -1,0 +1,11 @@
+{
+  "worldMapId": 2,
+  "scheduleId": 2,
+  "entryId": 1002,
+  "featureType": 1,
+  "unlockLevel": 1,
+  "unlockHintLevel": 1,
+  "chapterId": 1,
+  "firstStageId": 10101,
+  "source": "Local reference ExcelOutput/WorldMap.json ID=2, WorldMapSchedule.json ID=2 and ChapterData.json chapterId=1; client 9.1 consumer RVAs documented in WORLD_MAP_20261009.md"
+}

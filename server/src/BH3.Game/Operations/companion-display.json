@@ -1,0 +1,45 @@
+{
+  "gachaType": "GACHA_PJMS_ELF",
+  "commonData": {
+    "titleImage": "SpriteOutput/Gacha/GachaTitle_PJMS_ELF",
+    "supplyImage": "event/Immediately/GachaPic/9.1_W2AST_truecolor2048",
+    "title": "本地协同者补给",
+    "content": "本地自定义奖池",
+    "contentUrl": "",
+    "btnImagePath": "",
+    "isEnablePrompt": false,
+    "gachaId": 30217500,
+    "dataBeginTime": 1,
+    "dataEndTime": 2147483647,
+    "upElfList": [
+      180
+    ],
+    "displayExt": "{\"web_intro_img\":\"\",\"web_intro_text\":\"OptionalGachaTipsLink_Desc\",\"common_btn_img\":\"SpriteOutput/Gacha/GaChaIcon/IconFragment\",\"common_btn_text\":\"Menu_Tab_Shoplist\",\"common_gacha_bg\":\"event/Immediately/GachaPic/9.1_W2AST_BG_truecolor2048\",\"banner_btn_img\":\"event/Immediately/GachaPic/9.1_W2AST_Pack\",\"common_btn_img_02\":\"\",\"common_btn_text_02\":\"\"}"
+  },
+  "pjmsGachaData": {
+    "ticketHcoinCost": 280,
+    "ticketMaterialId": 1102,
+    "gachaTimes": 0,
+    "displayProtectTimes": 60,
+    "noProtectGachaTimes": 0,
+    "displaySettingDict": {
+      "dictItemList": [
+        {
+          "key": "IsShowPropBtn",
+          "type": "INT",
+          "value": "1"
+        },
+        {
+          "key": "IsShowRecordBtn",
+          "type": "INT",
+          "value": "1"
+        }
+      ]
+    },
+    "gachaExRewardInfo": {},
+    "protectDisplayInfo": {
+      "noProtectGachaTimes": 0,
+      "displayKeyElfCardId": 380180
+    }
+  }
+}

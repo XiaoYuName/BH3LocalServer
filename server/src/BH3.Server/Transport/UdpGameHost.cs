@@ -24,6 +24,20 @@ public sealed class UdpGameHost(SessionRegistry sessions, GameDispatcher? dispat
     {
         get { lock (gate) return new { received, handshakes, unsupported, rejected, messages, channels = peers.Count, recentCommands = recentCommands.ToArray() }; }
     }
+    public T ApplyGm<T>(uint uid,Func<T> action,Func<GameSession,IReadOnlyList<GamePacket>> notifications)
+    {
+        lock(gate)
+        {
+            T result=action();
+            foreach(var pair in peers.ToArray().Where(x=>x.Value.Session.PlayerId==uid&&x.Value.Session.State==SessionState.Authenticated))
+            {
+                try{foreach(var packet in notifications(pair.Value.Session))pair.Value.Channel.Send(GamePacketCodec.Encode(packet));pair.Value.Channel.Update(Tick);}
+                catch(Exception ex) when(ex is not OutOfMemoryException)
+                {log?.Invoke("gm.notify.failed",new {uid,error=ex.GetType().Name});pair.Value.Session.Close();Remove(pair.Key);}
+            }
+            return result;
+        }
+    }
     public void Start(IPAddress address, int port)
     {
         if (socket is not null) throw new InvalidOperationException("UDP host is already started.");

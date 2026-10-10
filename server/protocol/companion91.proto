@@ -1,0 +1,13 @@
+syntax = "proto2";
+package proto;
+option csharp_namespace = "BH3.Protocol.Messages";
+// 9.1 Partthree: writer 0xF4CD5F0, command writer 0xF4CDCD0 (1742).
+message SwitchElfSkillReq {
+  optional uint32 elf_id = 1;
+  optional uint32 skill_id = 2;
+  optional bool is_mask = 3;
+}
+message SwitchElfSkillRsp {
+  enum Retcode { SUCC = 0; FAIL = 1; }
+  required Retcode retcode = 1;
+}

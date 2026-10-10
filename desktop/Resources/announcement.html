@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>本地服公告</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#eef2f6;color:#24354b;font:18px/1.8 "Microsoft YaHei",sans-serif}header{display:flex;align-items:center;justify-content:space-between;padding:16px 5%;background:#213550;color:white}h1{font-size:25px;margin:0}button{border:0;border-radius:5px;background:#ffde46;padding:8px 25px;color:#26364d;font:inherit;cursor:pointer}main{max-width:1040px;margin:30px auto;padding:0 28px}article{padding:25px 35px;margin-bottom:20px;background:white;border-left:5px solid #1cacdb;box-shadow:0 3px 16px #2135500d}h2{font-size:23px;margin:0 0 12px}p{margin:10px 0}.date{color:#6c7e91;font-size:15px}
+</style></head><body>
+<header><h1>本地服公告</h1><button id="close" type="button">关闭 ×</button></header>
+<main><article><h2>商城恢复与本地购买</h2><div class="date">本地服 · 1.4.2</div><p>商城现已恢复抓包中记录的商品分类及充值商品。人民币购买在本地直接结算，不产生真实扣款。</p><p>有完整奖励配置的商品会同步发放奖励；缺少奖励明细的商品暂时只记录购买成功，可在 GM「商店配置」中配置奖励。</p></article>
+<article><h2>舰长存档与 GM 管理</h2><p>角色、装备、余额和通关进度继续使用本地存档。通过登录器打开 GM 工具，可管理邮件、补给和商店。</p><p>这是本地服公告页面，内容不代表官方活动安排。</p></article></main>
+<script>
+(() => {
+  'use strict';
+  // The PC SDK publishes jsapiready after registering its native functions.
+  // Keep the page self-contained; it must load without a remote JS/CDN request.
+  const callbacks = new Map();
+  function send(method, data = {}) {
+    const frame = document.createElement('iframe');
+    frame.hidden = true;
+    frame.src = 'uniwebview://' + method + '?callback=bh3LocalCallback&data=' + encodeURIComponent(JSON.stringify(data));
+    document.body.appendChild(frame);
+    setTimeout(() => frame.remove(), 1000);
+  }
+  window.bh3LocalCallback = () => {};
+  window.miHoYoGameJSSDK = {
+    publish(event, data) {
+      const name = typeof event === 'string' ? event : event?.event || event?.type;
+      (callbacks.get(name) || []).forEach(fn => fn(data));
+    },
+    subscribe(name, fn) { callbacks.set(name, [...(callbacks.get(name) || []), fn]); },
+    invoke: send,
+    openInWebview() {}, openInBrowser() {}
+  };
+  let ready = false;
+  function init() { if (ready) return; ready = true; send('init', {retcode:0}); }
+  window.miHoYoGameJSSDK.subscribe('jsapiready', init);
+  function close() { send('close'); }
+  document.getElementById('close').onclick = close;
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+  window.addEventListener('load', init);
+})();
+</script></body></html>

@@ -11,22 +11,43 @@ public sealed class StageProgress
     public uint BestScore { get; set; }
     public HashSet<uint> Challenges { get; set; } = [];
 }
-public sealed record StageRun(uint StageId, string Key, uint StartedAt, uint Cost, uint[] Avatars, byte[] BeginResponse);
+public sealed record StageRun(uint StageId, string Key, uint StartedAt, uint Cost, uint[] Avatars, byte[] BeginResponse, uint[]? Trials = null, uint[]? Elfs = null);
 public sealed class CampaignState
 {
+    public ModeEntryState ModeEntries { get; set; } = new();
+    public SystemsState Systems { get; set; } = new();
+    public Dictionary<uint,CompanionState> Companions { get; set; } = [];
+    public HashSet<string> CompanionImports { get; set; } = [];
+    public OperationsState Operations { get; set; } = new();
+    public ChallengeState Challenges { get; set; } = new();
     public Dictionary<uint, StageProgress> Stages { get; set; } = [];
     public HashSet<uint> ClaimedMissions { get; set; } = [];
     public HashSet<string> ClaimedActRewards { get; set; } = [];
     public Dictionary<uint, uint> Materials { get; set; } = [];
     public uint[] Team { get; set; } = [];
+    public Dictionary<uint, uint[]> ModeTeams { get; set; } = [];
+    public HashSet<uint> FinishedPlots { get; set; } = [];
     public StageRun? Run { get; set; }
 }
 
 // All gameplay state, wallet changes and settlement receipts share the same SQLite transaction.
 public sealed class CampaignTransaction(SqliteConnection connection, SqliteTransaction transaction, uint uid, LobbyState lobby, CampaignState campaign)
 {
+    public uint Uid => uid;
     public LobbyState Lobby { get; set; } = lobby;
     public CampaignState Campaign { get; } = campaign;
+    private bool inventoryLoaded;
+    private PlayerInventory? inventory;
+    internal bool InventoryChanged { get; private set; }
+    public PlayerInventory? Inventory
+    {
+        get
+        {
+            if (!inventoryLoaded) { inventory = LobbyStore.ReadInventory(connection, transaction, uid); inventoryLoaded = true; }
+            return inventory;
+        }
+        set { inventory = value; inventoryLoaded = true; InventoryChanged = true; }
+    }
     public byte[]? Receipt(string fingerprint)
     {
         using var command = connection.CreateCommand(); command.Transaction = transaction;
@@ -63,6 +84,8 @@ public sealed partial class LobbyStore
             """;
         command.Parameters.AddWithValue("$lobby", JsonSerializer.Serialize(context.Lobby));
         command.Parameters.AddWithValue("$campaign", JsonSerializer.Serialize(context.Campaign));
-        command.ExecuteNonQuery(); transaction.Commit(); return result;
+        command.ExecuteNonQuery();
+        if (context.InventoryChanged && context.Inventory is { } inventory) WriteInventory(connection, transaction, uid, inventory);
+        transaction.Commit(); return result;
     }
 }

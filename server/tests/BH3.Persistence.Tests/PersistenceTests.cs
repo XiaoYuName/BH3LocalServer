@@ -18,7 +18,7 @@ public sealed class PersistenceTests
     {
         using var temp = new TestDirectory(); var factory = new SqliteConnectionFactory(Path.Combine(temp.Path,"test.db"));
         SchemaMigrator.Initialize(factory); SchemaMigrator.Initialize(factory);
-        using var connection = factory.Open(); Assert.Equal(3, SchemaMigrator.Version(connection));
+        using var connection = factory.Open(); Assert.Equal(4, SchemaMigrator.Version(connection));
         using var command = connection.CreateCommand(); command.CommandText = "INSERT INTO player_profile VALUES(77,'orphan',0);";
         Assert.Throws<SqliteException>(() => command.ExecuteNonQuery());
     }

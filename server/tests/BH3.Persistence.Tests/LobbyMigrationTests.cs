@@ -50,6 +50,6 @@ public sealed class LobbyMigrationTests
         Assert.Equal(new byte[] { 1, 2, 3 }, Assert.Single(new LobbyStore(factory).ReadClient(10001, 1, 42)).Data);
         Assert.Empty(lobby.ReadClient(10002, 1, 42));
         Assert.Throws<ArgumentException>(() => lobby.WriteClient(10001, new(1, 42, new byte[65537])));
-        using var reopened = factory.Open(); Assert.Equal(3, SchemaMigrator.Version(reopened));
+        using var reopened = factory.Open(); Assert.Equal(4, SchemaMigrator.Version(reopened));
     }
 }

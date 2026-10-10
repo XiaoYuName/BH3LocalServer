@@ -36,10 +36,11 @@ public sealed class ServerRuntime : IAsyncDisposable
             log = new(config.ResolveLogs(), output); Composition.Initialize();
             udp = new(Composition.Sessions, config.TransportMode == "kcp" ? Composition.Dispatcher : null, (name, data) => log.Write("info", name, data));
             udp.Start(IPAddress.Parse(config.BindAddress), config.GamePort);
-            var builder = WebApplication.CreateSlimBuilder(new WebApplicationOptions { Args = [], ContentRootPath = config.BaseDirectory });
+            var builder = WebApplication.CreateSlimBuilder(new WebApplicationOptions { Args = [], ContentRootPath = config.BaseDirectory, WebRootPath = Path.Combine(AppContext.BaseDirectory,"wwwroot") });
             builder.Logging.ClearProviders();
             builder.WebHost.ConfigureKestrel(k => k.Listen(IPAddress.Parse(config.BindAddress), config.HealthPort));
             api = builder.Build();
+            GmEndpoints.Map(api,Composition,udp);
             api.MapGet("/health/live", () => Results.Json(new { status = "live" }));
             api.MapGet("/health/ready", () => Results.Json(Status(), statusCode: Ready ? 200 : 503));
             api.MapGet("/api/status", () => Results.Json(Status()));
@@ -52,7 +53,7 @@ public sealed class ServerRuntime : IAsyncDisposable
     }
     public object Status() => new
     {
-        service = "BH3.Server", version = "1.2.4", clientVersion = config.ClientVersion,
+        service = "BH3.Server", version = "1.4.1", clientVersion = config.ClientVersion,
         processId = Environment.ProcessId, gamePort = udp?.Port,
         hostReady = Ready, gameplayReady = false, transport = config.TransportMode,
         schemaVersion = SchemaMigrator.CurrentVersion, sessions = Composition.Sessions.Count,

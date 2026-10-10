@@ -1,0 +1,248 @@
+{
+  "retcode": "SUCC",
+  "totalPayHcoin": 0,
+  "vipRewardList": [
+    {
+      "vipLevel": 1,
+      "payHcoin": 10,
+      "rewardIdList": [
+        2101,
+        2201
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2101
+      ],
+      "isSpecialShineList": [
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 2,
+      "payHcoin": 300,
+      "rewardIdList": [
+        2002,
+        2102,
+        2302
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2102,
+        2302
+      ],
+      "isSpecialShineList": [
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 3,
+      "payHcoin": 500,
+      "rewardIdList": [
+        2103,
+        2203,
+        2303
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2103,
+        2303
+      ],
+      "isSpecialShineList": [
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 4,
+      "payHcoin": 1000,
+      "rewardIdList": [
+        2004,
+        2104,
+        2304
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2104,
+        2304
+      ],
+      "isSpecialShineList": [
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 5,
+      "payHcoin": 2000,
+      "rewardIdList": [
+        2105,
+        2205,
+        2305
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2105,
+        2305
+      ],
+      "isSpecialShineList": [
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 6,
+      "payHcoin": 5000,
+      "rewardIdList": [
+        2006,
+        2106,
+        2306
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2106,
+        2306
+      ],
+      "isSpecialShineList": [
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 7,
+      "payHcoin": 10000,
+      "rewardIdList": [
+        2107,
+        2207,
+        2257,
+        2307
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2107,
+        2307
+      ],
+      "isSpecialShineList": [
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 8,
+      "payHcoin": 20000,
+      "rewardIdList": [
+        2108,
+        2208,
+        2258,
+        2308
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2108,
+        2308
+      ],
+      "isSpecialShineList": [
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 9,
+      "payHcoin": 50000,
+      "rewardIdList": [
+        2109,
+        2209,
+        2309
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2109,
+        2309
+      ],
+      "isSpecialShineList": [
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 10,
+      "payHcoin": 100000,
+      "rewardIdList": [
+        2110,
+        2210,
+        2310
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2110,
+        2310
+      ],
+      "isSpecialShineList": [
+        1,
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 11,
+      "payHcoin": 150000,
+      "rewardIdList": [
+        2261,
+        2311
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2311
+      ],
+      "isSpecialShineList": [
+        1,
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 12,
+      "payHcoin": 200000,
+      "rewardIdList": [
+        2262,
+        2312
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2312
+      ],
+      "isSpecialShineList": [
+        1,
+        1,
+        1
+      ],
+      "takenRewardIdList": []
+    },
+    {
+      "vipLevel": 13,
+      "payHcoin": 250000,
+      "rewardIdList": [
+        2263,
+        2313
+      ],
+      "rewardBatch": 1,
+      "specialRewardIdList": [
+        2313
+      ],
+      "isSpecialShineList": [
+        1
+      ],
+      "takenRewardIdList": []
+    }
+  ]
+}

@@ -35,8 +35,12 @@ public sealed partial class LobbyHandlers(LobbyStore store, IPlayerStore profile
 
     public IEnumerable<IGameMessageHandler> Create()
     {
+        foreach (var handler in CreateSystemsHandlers()) yield return handler;
         foreach (var handler in CreateStartupHandlers()) yield return handler;
         foreach (var handler in CreateCampaignHandlers()) yield return handler;
+        foreach (var handler in CreateOperationsHandlers()) yield return handler;
+        foreach (var handler in CreateChallengeHandlers()) yield return handler;
+        foreach (var handler in CreateCompanionHandlers()) yield return handler;
         yield return Respond(4, 5, GetPlayerTokenReq.Parser, Token, SessionState.Connected);
         yield return Respond(6, 7, PlayerLoginReq.Parser, Login, SessionState.TokenIssued);
         yield return new Handler(1, SessionState.Authenticated, (_, packet) => { KeepAliveNotify.Parser.ParseFrom(packet.Body); return []; }, true);
@@ -44,10 +48,12 @@ public sealed partial class LobbyHandlers(LobbyStore store, IPlayerStore profile
         yield return Respond(10, 11, GetMainDataReq.Parser, (session, _) => Main(session));
         yield return Respond(24, 25, GetAvatarDataReq.Parser, Avatars);
         yield return Respond(26, 27, GetEquipmentDataReq.Parser, Equipment);
+        // 9.1 resolves every returned member to an owned avatar. Zero padding fails
+        // prepare-page validation and makes each response trigger another team query.
         yield return Respond(47, 48, GetAvatarTeamDataReq.Parser, (session, _) => new GetAvatarTeamDataRsp { Retcode = GetAvatarTeamDataRsp.Types.Retcode.Succ,
-            AvatarTeamList = { new AvatarTeam { StageType = 1, AvatarIdList = { campaign.Team(Uid(session)).Concat(new uint[] { 0, 0 }).Take(3) } } } });
-        yield return Respond(110, 111, GetConfigReq.Parser, (_, _) => new GetConfigRsp { Retcode = GetConfigRsp.Types.Retcode.Succ,
-            StaminaRecoverConfigTime = 360, ServerCurTime = Now, DayTimeOffset = 14400, RegionName = "pc01", MaxFriendNum = 50, ScoinLimit = 999999999, NextDayBeginTime = Now + 86400 });
+            AvatarTeamList = { new uint[] { 1, 60 }.Select(type => new AvatarTeam { StageType = type, AvatarIdList = { campaign.Team(Uid(session), type) } }) } });
+        yield return Respond(110, 111, GetConfigReq.Parser, (session, _) => new GetConfigRsp { Retcode = GetConfigRsp.Types.Retcode.Succ,
+            StaminaRecoverConfigTime = 360, ServerCurTime = Now, DayTimeOffset = 14400, RegionName = "pc01", MaxFriendNum = 50, ScoinLimit = 999999999, NextDayBeginTime = ((Now + 14400) / 86400 + 1) * 86400 - 14400, BulletinActivityList = { systems.ActivityConfigs(Uid(session)) } });
         yield return Respond(127, 128, GetFinishGuideDataReq.Parser, (session, _) => new GetFinishGuideDataRsp { Retcode = GetFinishGuideDataRsp.Types.Retcode.Succ, GuideIdList = { store.Read(Uid(session)).CompletedGuides } });
         yield return Respond(1586, 1587, GetClientDataReq.Parser, (session, request) => new GetClientDataRsp { Retcode = GetClientDataRsp.Types.Retcode.Succ, Type = request.Type, Id = request.Id,
             ClientDataList = { store.ReadClient(Uid(session), (int)request.Type, request.Id).Select(v => new ClientData { Type = (ClientDataType)v.Type, Id = v.Id, Data = ByteString.CopyFrom(v.Data) }) } });
@@ -60,14 +66,17 @@ public sealed partial class LobbyHandlers(LobbyStore store, IPlayerStore profile
         yield return Respond(1270, 1272, GetClientSettingReq.Parser, (_, request) => new GetClientSettingRsp { Retcode = GetClientSettingRsp.Types.Retcode.Succ, ClientSettingType = request.ClientSettingType });
         yield return Respond(5454, 5455, GetWarshipDataReq.Parser, (_, _) => new GetWarshipDataRsp { Retcode = GetWarshipDataRsp.Types.Retcode.Succ, IsAll = true, WarshipList = { new WarshipThemeData { WarshipId = 0 } } });
         yield return Respond(5450, 5451, GetWarshipItemDataReq.Parser, (_, _) => new GetWarshipItemDataRsp { Retcode = GetWarshipItemDataRsp.Types.Retcode.Succ, IsAll = true });
-        yield return Respond(2100, 2101, GetElfDataReq.Parser, (_, _) => new GetElfDataRsp { Retcode = GetElfDataRsp.Types.Retcode.Succ });
         yield return Respond(1523, 1524, GetCustomHeadDataReq.Parser, (_, _) => new GetCustomHeadDataRsp { Retcode = GetCustomHeadDataRsp.Types.Retcode.Succ, IsAll = true });
-        yield return Respond(590, 591, GetFrameDataReq.Parser, (_, _) => new GetFrameDataRsp { Retcode = GetFrameDataRsp.Types.Retcode.Succ, IsAll = true });
+        yield return Respond(590, 591, GetFrameDataReq.Parser, (s, _) => operations.Frames(Uid(s)));
         yield return Respond(231, 232, GetExtraStoryDataReq.Parser, (_, _) => new GetExtraStoryDataRsp { Retcode = GetExtraStoryDataRsp.Types.Retcode.Succ });
-        yield return Respond(137, 138, GetBulletinReq.Parser, (_, _) => new GetBulletinRsp { Retcode = GetBulletinRsp.Types.Retcode.Succ, IsAll = true });
         yield return Respond(4192, 4193, GetLoginActivityReq.Parser, (_, _) => new GetLoginActivityRsp { Retcode = GetLoginActivityRsp.Types.Retcode.Succ });
         yield return Respond(1705, 1706, GetActivityMainDataReq.Parser, (_, _) => new GetActivityMainDataRsp { Retcode = GetActivityMainDataRsp.Types.Retcode.Succ });
-        yield return Respond(104, 105, GetHasGotItemIdListReq.Parser, (session, _) => new GetHasGotItemIdListRsp { Retcode = GetHasGotItemIdListRsp.Types.Retcode.Succ, ItemIdList = { store.Read(Uid(session)).WeaponId } });
+        yield return Respond(104, 105, GetHasGotItemIdListReq.Parser, (session, _) =>
+        {
+            var equipment = Equipment(session, new());
+            return new GetHasGotItemIdListRsp { Retcode = GetHasGotItemIdListRsp.Types.Retcode.Succ,
+                ItemIdList = { equipment.WeaponList.Select(w => w.Id).Concat(equipment.StigmataList.Select(s => s.Id)).Distinct() } };
+        });
         yield return Respond(619, 620, GetHasGotFurnitureIdListReq.Parser, (_, _) => new GetHasGotFurnitureIdListRsp { Retcode = GetHasGotFurnitureIdListRsp.Types.Retcode.Succ });
     }
     private IMessage Token(GameSession session, GetPlayerTokenReq request)
@@ -97,8 +106,8 @@ public sealed partial class LobbyHandlers(LobbyStore store, IPlayerStore profile
     private GetMainDataRsp Main(GameSession session)
     {
         uint uid = Uid(session); var state = campaign.Refresh(uid); var profile = profiles.Find(uid)!;
-        return new GetMainDataRsp { Retcode = GetMainDataRsp.Types.Retcode.Succ, Nickname = profile.Nickname, Level = state.Level, Stamina = state.Stamina, Exp = state.Exp, Scoin = state.Scoin, Hcoin = state.Hcoin,
-            AssistantAvatarId = state.AvatarId, StaminaRecoverConfigTime = 360, StaminaRecoverLeftTime = 360, EquipmentSizeLimit = 1000, IsAll = true,
+        return new GetMainDataRsp { Retcode = GetMainDataRsp.Types.Retcode.Succ, Nickname = profile.Nickname, Level = state.Level, Stamina = state.Stamina, Exp = state.Exp, Scoin = state.Scoin, Hcoin = state.Hcoin, Mcoin = operations.Mcoin(uid),
+            AssistantAvatarId = state.AvatarId, StaminaRecoverConfigTime = 360, StaminaRecoverLeftTime = 360, EquipmentSizeLimit = 2300, IsAll = true,
             SelfDesc = "BH3 Local", RegisterTime = state.RegisteredAt, TotalLoginDays = 1, LevelLockId = 1,
             WarshipAvatar = new WarshipAvatarData { WarshipFirstAvatarId = state.AvatarId }, WarshipTheme = new WarshipThemeData { WarshipId = 0 },
             TypeList = { Enumerable.Range(2, 38).Select(v => (uint)v) } };
